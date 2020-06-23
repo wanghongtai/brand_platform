@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gqgx.common.mapper.BrandNavItemMapper">
+  <resultMap id="BaseResultMap" type="com.gqgx.common.entity.BrandNavItem">
+    <id column="A_id" jdbcType="BIGINT" property="id" />
+    <result column="A_name" jdbcType="VARCHAR" property="name" />
+    <result column="A_city_name" jdbcType="VARCHAR" property="cityName" />
+    <result column="A_url" jdbcType="VARCHAR" property="url" />
+    <result column="A_seq" jdbcType="INTEGER" property="seq" />
+    <result column="A_update_status" jdbcType="CHAR" property="updateStatus" />
+    <result column="A_show_status" jdbcType="CHAR" property="showStatus" />
+    <result column="A_record_status" jdbcType="CHAR" property="recordStatus" />
+    <result column="A_update_count" jdbcType="INTEGER" property="updateCount" />
+    <result column="A_create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="A_creator_id" jdbcType="BIGINT" property="creatorId" />
+    <result column="A_update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="A_updater_id" jdbcType="BIGINT" property="updaterId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    A.id as A_id, A.name as A_name, A.city_name as A_city_name, A.url as A_url, A.seq as A_seq, 
+    A.update_status as A_update_status, A.show_status as A_show_status, A.record_status as A_record_status, 
+    A.update_count as A_update_count, A.create_date as A_create_date, A.creator_id as A_creator_id, 
+    A.update_date as A_update_date, A.updater_id as A_updater_id
+  </sql>
+  <select id="selectByExample" parameterType="com.gqgx.common.entity.BrandNavItemExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from brand_nav_item A
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from brand_nav_item A
+    where A.id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from brand_nav_item
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gqgx.common.entity.BrandNavItemExample">
+    delete from brand_nav_item A
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gqgx.common.entity.BrandNavItem">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into brand_nav_item (name, city_name, url, 
+      seq, update_status, show_status, 
+      record_status, update_count, create_date, 
+      creator_id, update_date, updater_id
+      )
+    values (#{name,jdbcType=VARCHAR}, #{cityName,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{seq,jdbcType=INTEGER}, #{updateStatus,jdbcType=CHAR}, #{showStatus,jdbcType=CHAR}, 
+      #{recordStatus,jdbcType=CHAR}, #{updateCount,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{creatorId,jdbcType=BIGINT}, #{updateDate,jdbcType=TIMESTAMP}, #{updaterId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gqgx.common.entity.BrandNavItem">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into brand_nav_item
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="cityName != null">
+        city_name,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="seq != null">
+        seq,
+      </if>
+      <if test="updateStatus != null">
+        update_status,
+      </if>
+      <if test="showStatus != null">
+        show_status,
+      </if>
+      <if test="recordStatus != null">
+        record_status,
+      </if>
+      <if test="updateCount != null">
+        update_count,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="updaterId != null">
+        updater_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null">
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null">
+        #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="updateStatus != null">
+        #{updateStatus,jdbcType=CHAR},
+      </if>
+      <if test="showStatus != null">
+        #{showStatus,jdbcType=CHAR},
+      </if>
+      <if test="recordStatus != null">
+        #{recordStatus,jdbcType=CHAR},
+      </if>
+      <if test="updateCount != null">
+        #{updateCount,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updaterId != null">
+        #{updaterId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gqgx.common.entity.BrandNavItemExample" resultType="java.lang.Integer">
+    select count(*) from brand_nav_item A
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update brand_nav_item A
+    <set>
+      <if test="record.id != null">
+        A.id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null">
+        A.name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityName != null">
+        A.city_name = #{record.cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null">
+        A.url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seq != null">
+        A.seq = #{record.seq,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateStatus != null">
+        A.update_status = #{record.updateStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.showStatus != null">
+        A.show_status = #{record.showStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.recordStatus != null">
+        A.record_status = #{record.recordStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.updateCount != null">
+        A.update_count = #{record.updateCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.createDate != null">
+        A.create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creatorId != null">
+        A.creator_id = #{record.creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        A.update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updaterId != null">
+        A.updater_id = #{record.updaterId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update brand_nav_item A
+    set A.id = #{record.id,jdbcType=BIGINT},
+      A.name = #{record.name,jdbcType=VARCHAR},
+      A.city_name = #{record.cityName,jdbcType=VARCHAR},
+      A.url = #{record.url,jdbcType=VARCHAR},
+      A.seq = #{record.seq,jdbcType=INTEGER},
+      A.update_status = #{record.updateStatus,jdbcType=CHAR},
+      A.show_status = #{record.showStatus,jdbcType=CHAR},
+      A.record_status = #{record.recordStatus,jdbcType=CHAR},
+      A.update_count = #{record.updateCount,jdbcType=INTEGER},
+      A.create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      A.creator_id = #{record.creatorId,jdbcType=BIGINT},
+      A.update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      A.updater_id = #{record.updaterId,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gqgx.common.entity.BrandNavItem">
+    update brand_nav_item
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null">
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null">
+        seq = #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="updateStatus != null">
+        update_status = #{updateStatus,jdbcType=CHAR},
+      </if>
+      <if test="showStatus != null">
+        show_status = #{showStatus,jdbcType=CHAR},
+      </if>
+      <if test="recordStatus != null">
+        record_status = #{recordStatus,jdbcType=CHAR},
+      </if>
+      <if test="updateCount != null">
+        update_count = #{updateCount,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updaterId != null">
+        updater_id = #{updaterId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gqgx.common.entity.BrandNavItem">
+    update brand_nav_item
+    set name = #{name,jdbcType=VARCHAR},
+      city_name = #{cityName,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      seq = #{seq,jdbcType=INTEGER},
+      update_status = #{updateStatus,jdbcType=CHAR},
+      show_status = #{showStatus,jdbcType=CHAR},
+      record_status = #{recordStatus,jdbcType=CHAR},
+      update_count = #{updateCount,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      creator_id = #{creatorId,jdbcType=BIGINT},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      updater_id = #{updaterId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

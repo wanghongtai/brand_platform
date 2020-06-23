@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gqgx.common.mapper.SysPositionMapper">
+  <resultMap id="BaseResultMap" type="com.gqgx.common.entity.SysPosition">
+    <id column="A_id" jdbcType="BIGINT" property="id" />
+    <result column="A_parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="A_name" jdbcType="VARCHAR" property="name" />
+    <result column="A_remark" jdbcType="VARCHAR" property="remark" />
+    <result column="A_department_id" jdbcType="BIGINT" property="departmentId" />
+    <result column="A_company_id" jdbcType="BIGINT" property="companyId" />
+    <result column="A_record_status" jdbcType="CHAR" property="recordStatus" />
+    <result column="A_update_count" jdbcType="INTEGER" property="updateCount" />
+    <result column="A_create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="A_creator_id" jdbcType="BIGINT" property="creatorId" />
+    <result column="A_update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="A_updater_id" jdbcType="BIGINT" property="updaterId" />
+    <result column="A_data_power" jdbcType="CHAR" property="dataPower" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    A.id as A_id, A.parent_id as A_parent_id, A.name as A_name, A.remark as A_remark, 
+    A.department_id as A_department_id, A.company_id as A_company_id, A.record_status as A_record_status, 
+    A.update_count as A_update_count, A.create_date as A_create_date, A.creator_id as A_creator_id, 
+    A.update_date as A_update_date, A.updater_id as A_updater_id, A.data_power as A_data_power
+  </sql>
+  <select id="selectByExample" parameterType="com.gqgx.common.entity.SysPositionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_position A
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_position A
+    where A.id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_position
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gqgx.common.entity.SysPositionExample">
+    delete from sys_position A
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gqgx.common.entity.SysPosition">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_position (parent_id, name, remark, 
+      department_id, company_id, record_status, 
+      update_count, create_date, creator_id, 
+      update_date, updater_id, data_power
+      )
+    values (#{parentId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{departmentId,jdbcType=BIGINT}, #{companyId,jdbcType=BIGINT}, #{recordStatus,jdbcType=CHAR}, 
+      #{updateCount,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{creatorId,jdbcType=BIGINT}, 
+      #{updateDate,jdbcType=TIMESTAMP}, #{updaterId,jdbcType=BIGINT}, #{dataPower,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gqgx.common.entity.SysPosition">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_position
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="departmentId != null">
+        department_id,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="recordStatus != null">
+        record_status,
+      </if>
+      <if test="updateCount != null">
+        update_count,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="updaterId != null">
+        updater_id,
+      </if>
+      <if test="dataPower != null">
+        data_power,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="parentId != null">
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null">
+        #{departmentId,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="recordStatus != null">
+        #{recordStatus,jdbcType=CHAR},
+      </if>
+      <if test="updateCount != null">
+        #{updateCount,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updaterId != null">
+        #{updaterId,jdbcType=BIGINT},
+      </if>
+      <if test="dataPower != null">
+        #{dataPower,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gqgx.common.entity.SysPositionExample" resultType="java.lang.Integer">
+    select count(*) from sys_position A
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_position A
+    <set>
+      <if test="record.id != null">
+        A.id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.parentId != null">
+        A.parent_id = #{record.parentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null">
+        A.name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        A.remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departmentId != null">
+        A.department_id = #{record.departmentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.companyId != null">
+        A.company_id = #{record.companyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.recordStatus != null">
+        A.record_status = #{record.recordStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.updateCount != null">
+        A.update_count = #{record.updateCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.createDate != null">
+        A.create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creatorId != null">
+        A.creator_id = #{record.creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        A.update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updaterId != null">
+        A.updater_id = #{record.updaterId,jdbcType=BIGINT},
+      </if>
+      <if test="record.dataPower != null">
+        A.data_power = #{record.dataPower,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_position A
+    set A.id = #{record.id,jdbcType=BIGINT},
+      A.parent_id = #{record.parentId,jdbcType=BIGINT},
+      A.name = #{record.name,jdbcType=VARCHAR},
+      A.remark = #{record.remark,jdbcType=VARCHAR},
+      A.department_id = #{record.departmentId,jdbcType=BIGINT},
+      A.company_id = #{record.companyId,jdbcType=BIGINT},
+      A.record_status = #{record.recordStatus,jdbcType=CHAR},
+      A.update_count = #{record.updateCount,jdbcType=INTEGER},
+      A.create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      A.creator_id = #{record.creatorId,jdbcType=BIGINT},
+      A.update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      A.updater_id = #{record.updaterId,jdbcType=BIGINT},
+      A.data_power = #{record.dataPower,jdbcType=CHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gqgx.common.entity.SysPosition">
+    update sys_position
+    <set>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null">
+        department_id = #{departmentId,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="recordStatus != null">
+        record_status = #{recordStatus,jdbcType=CHAR},
+      </if>
+      <if test="updateCount != null">
+        update_count = #{updateCount,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updaterId != null">
+        updater_id = #{updaterId,jdbcType=BIGINT},
+      </if>
+      <if test="dataPower != null">
+        data_power = #{dataPower,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gqgx.common.entity.SysPosition">
+    update sys_position
+    set parent_id = #{parentId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      department_id = #{departmentId,jdbcType=BIGINT},
+      company_id = #{companyId,jdbcType=BIGINT},
+      record_status = #{recordStatus,jdbcType=CHAR},
+      update_count = #{updateCount,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      creator_id = #{creatorId,jdbcType=BIGINT},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      updater_id = #{updaterId,jdbcType=BIGINT},
+      data_power = #{dataPower,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
