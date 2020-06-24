@@ -8,7 +8,7 @@ import java.util.List;
 public class BrandLargeTypeVo extends BrandLargeType {
 
 	private static final long serialVersionUID = 8980719581212865813L;
-	
+
 	/**
 	 * 大类下的子类列表
 	 */
@@ -21,5 +21,5 @@ public class BrandLargeTypeVo extends BrandLargeType {
 	public void setSmallTypeList(List<BrandSmallType> smallTypeList) {
 		this.smallTypeList = smallTypeList;
 	}
-	
+
 }

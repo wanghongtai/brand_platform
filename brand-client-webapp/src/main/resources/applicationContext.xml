@@ -62,17 +62,24 @@
 		<property name="configLocation" value="classpath:mybatis-config-mysql.xml"></property>
 		<property name="mapperLocations">
 			<list>
-				<value>classpath:com/gqgx/common/mapper/*Mapper.xml</value>
-				<!--<value>classpath:com/gqgx/common/mapper/BrandGnSmalltypeItemMapper.xml</value>-->
-				<!--<value>classpath:com/gqgx/common/mapper/BrandSmallTypeMapper.xml</value>-->
-				<!--<value>classpath:com/gqgx/common/mapper/SysPositionMenuMapper.xml</value>-->
+				<value>classpath:mapper/*Mapper.xml</value>
 			</list>
 		</property>
 	</bean>
 
 	<!--MapperScannerConfigurer根据指定包批量扫描Mapper接口并生成实例-->
-	<bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.gqgx.common.mapper"></property>
+	<!--<bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
+		<!--<property name="basePackage" value="com.gqgx.common.mapper"></property>-->
+	<!--</bean>-->
+	<!-- 使用tk包的扫描类整合，Spring会自动查找其下的类 -->
+	<bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.gqgx.common.mapper" />
+		<property name="properties">
+			<value>
+				<!-- 通用mapper -->
+				mappers=tk.mybatis.mapper.common.Mapper
+			</value>
+		</property>
 	</bean>
 
 	<!-- 开启AOP监听-->

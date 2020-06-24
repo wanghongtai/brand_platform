@@ -3,6 +3,7 @@ package com.gqgx.common.service;
 import com.gqgx.common.entity.BrandGnSmalltypeItem;
 import com.gqgx.common.entity.BrandLargeType;
 import com.gqgx.common.entity.vo.BrandGnSmalltypeItemVo;
+import com.gqgx.common.entity.vo.BrandLargeTypeVo;
 import com.gqgx.common.paging.LayuiPage;
 import com.gqgx.common.paging.PagingResult;
 import org.junit.Test;
@@ -24,13 +25,8 @@ public class BrandLargeTypeServiceImplTest {
 
     @Test
     public void test() throws Exception {
-        BrandGnSmalltypeItemVo vo = new BrandGnSmalltypeItemVo();
-        vo.setSmallTypeId(1L);
-
-
         BrandLargeType brandLargeType = new BrandLargeType();
-        List<BrandLargeType> brandLargeTypeList
-                = brandLargeTypeService.findBrandLargeTypeList(brandLargeType);
+        List<BrandLargeType> brandLargeTypeList = brandLargeTypeService.findBrandLargeTypeList(brandLargeType);
 
         System.out.println("总条数："+brandLargeTypeList.size());
         for(BrandLargeType item:brandLargeTypeList){

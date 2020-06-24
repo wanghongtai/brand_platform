@@ -3,7 +3,6 @@ package com.gqgx.common.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.gqgx.common.criteria.Criteria;
 import com.gqgx.common.entity.BrandGnSmalltypeItem;
-import com.gqgx.common.entity.BrandGnSmalltypeItemExample;
 import com.gqgx.common.entity.RecordStatus;
 import com.gqgx.common.entity.vo.BrandGnSmalltypeItemVo;
 import com.gqgx.common.lang.Objects;
@@ -12,6 +11,7 @@ import com.gqgx.common.paging.LayuiPage;
 import com.gqgx.common.paging.PagingResult;
 import com.gqgx.common.service.BrandGnSmalltypeItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
@@ -55,23 +55,24 @@ public class BrandGnSmalltypeItemServiceImpl implements BrandGnSmalltypeItemServ
     @Override
     public PagingResult<BrandGnSmalltypeItem> findBrandGnSmalltypeItemList(BrandGnSmalltypeItemVo item, LayuiPage page) {
 
-        BrandGnSmalltypeItemExample example = new BrandGnSmalltypeItemExample();
-        BrandGnSmalltypeItemExample.Criteria criteria = example.createCriteria();
+
+        Example example = new Example(BrandGnSmalltypeItem.class);
+        Example.Criteria criteria = example.createCriteria();
         /*if(!Objects.isEmpty(item.getLargeTypeId())) {
         }*/
 
-        if(!Objects.isEmpty(item.getSmallTypeId())) {
-            criteria.andSmallTypeIdEqualTo(item.getSmallTypeId());
+        if (!Objects.isEmpty(item.getSmallTypeId())) {
+            criteria.andEqualTo("smallTypeId", item.getSmallTypeId());
         }
 
         /*if(!Objects.isEmpty(item.getFilter())) {
         }*/
 
-        criteria.andRecordStatusEqualTo(RecordStatus.ACTIVE);
+        criteria.andEqualTo("recordStatus", RecordStatus.ACTIVE);
 
-        example.setOrderByClause("A.group_no, A.project_no ASC");
+        example.setOrderByClause("group_no, project_no ASC");
 
-        if(page!=null){
+        if (page != null) {
             PageHelper.startPage(page.getPage(), page.getLimit());
         }
         List<BrandGnSmalltypeItem> list = brandGnSmalltypeItemDAO.selectByExample(example);

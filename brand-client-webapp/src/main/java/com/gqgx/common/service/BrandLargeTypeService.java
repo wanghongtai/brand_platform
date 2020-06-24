@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.gqgx.common.criteria.Criteria;
 import com.gqgx.common.entity.BrandLargeType;
+import com.gqgx.common.entity.vo.BrandLargeTypeVo;
 import com.gqgx.common.paging.LayuiPage;
 import com.gqgx.common.paging.PagingResult;
 
