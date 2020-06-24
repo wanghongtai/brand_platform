@@ -9,6 +9,7 @@ public class SysOperationLog {
      * 主键ID
      */
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     /**

@@ -9,6 +9,7 @@ public class BrandGnSmalltypeItem {
      * 主键
      */
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     /**

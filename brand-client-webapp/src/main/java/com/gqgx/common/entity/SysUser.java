@@ -9,6 +9,7 @@ public class SysUser {
      * 表主键
      */
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     /**

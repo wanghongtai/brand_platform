@@ -9,6 +9,7 @@ public class BrandNavItem {
      * 主键PK
      */
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     /**

@@ -19,6 +19,7 @@ public class BrandLargeType {
      * 主键
      */
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     /**
@@ -327,5 +328,19 @@ public class BrandLargeType {
 
     public void setSmallTypeList(List<BrandSmallType> smallTypeList) {
         this.smallTypeList = smallTypeList;
+    }
+
+    @Override
+    public String toString() {
+        return "BrandLargeType{" +
+                "smallTypeList=" + smallTypeList +
+                ", id=" + id +
+                ", catalog='" + catalog + '\'' +
+                ", cnno='" + cnno + '\'' +
+                ", no='" + no + '\'' +
+                ", name='" + name + '\'' +
+                ", instruction='" + instruction + '\'' +
+                ", .........." +
+                '}';
     }
 }

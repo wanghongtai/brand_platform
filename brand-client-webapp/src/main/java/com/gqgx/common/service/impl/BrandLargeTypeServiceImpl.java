@@ -1,20 +1,17 @@
 package com.gqgx.common.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.gqgx.common.criteria.Criteria;
 import com.gqgx.common.entity.BrandLargeType;
 import com.gqgx.common.entity.RecordStatus;
-import com.gqgx.common.entity.vo.BrandLargeTypeVo;
 import com.gqgx.common.lang.Objects;
 import com.gqgx.common.mapper.BrandLargeTypeMapper;
 import com.gqgx.common.paging.LayuiPage;
 import com.gqgx.common.paging.PagingResult;
 import com.gqgx.common.service.BrandLargeTypeService;
-import javafx.scene.Parent;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @org.springframework.stereotype.Service
@@ -26,32 +23,58 @@ public class BrandLargeTypeServiceImpl implements BrandLargeTypeService {
 
     @Override
     public BrandLargeType getBrandLargeType(Long id) {
-        return null;
+        return brandLargeTypeDAO.selectByPrimaryKey(id);
     }
 
     @Override
     public int saveBrandLargeType(BrandLargeType brandLargeType) {
-        return 0;
+        int count = 0;
+        if(!Objects.isEmpty(brandLargeType.getId())){
+            count = brandLargeTypeDAO.updateByPrimaryKeySelective(brandLargeType);
+        }else{
+            //insert方法是使用所有的属性作为字段使用,如INSERT INTO tb_user (AGE,USER_NAME,ID,NAME,BIRTHDAY,SEX,PASSWORD,UPDATED,CREATED) VALUES ( ?,?,?,?,?,?,?,?,? )，Parameters: null, null, null, sansan(String), null, null, null, null, null
+            //insertSelective插入数据，使用不为null的属性作为字段使用，如 INSERT INTO tb_user ( ID,NAME ) VALUES ( ?,? )，Parameters: null, test_insertSelective(String)
+            count = brandLargeTypeDAO.insertSelective(brandLargeType);
+        }
+        return count;
     }
 
     @Override
     public int deleteBrandLargeType(BrandLargeType brandLargeType) {
-        return 0;
+        return brandLargeTypeDAO.deleteByPrimaryKey(brandLargeType);
     }
 
     @Override
     public int deleteBrandLargeTypeByIds(Long[] ids) {
-        return 0;
+        return brandLargeTypeDAO.deleteByIds(ids);
     }
 
     @Override
     public PagingResult<BrandLargeType> findBrandLargeType(Criteria criteria) {
-        return null;
+        //TODO:
+        throw new RuntimeException(".......未实现该方...........");
     }
 
     @Override
-    public PagingResult<BrandLargeType> findBrandLargeType(BrandLargeType brandLargeType, LayuiPage page) {
-        return null;
+    public PagingResult<BrandLargeType> findBrandLargeType(BrandLargeType type, LayuiPage page) {
+        Example example = new Example(BrandLargeType.class);
+
+        if(type != null && !Objects.isEmpty(type.getName())) {
+            example.createCriteria().andEqualTo("name", type.getName().trim());
+        }
+        example.createCriteria().andEqualTo("recordStatus", RecordStatus.ACTIVE);
+
+        example.setOrderByClause("catalog ASC");
+        List<BrandLargeType> brandLargeTypeList = brandLargeTypeDAO.selectByExample(example);
+
+        if (page != null) {
+            PageHelper.startPage(page.getPage(), page.getLimit());
+        }
+        List<BrandLargeType> list = brandLargeTypeDAO.selectByExample(example);
+
+        PagingResult<BrandLargeType> pageResult = new PagingResult<>(list);
+        return pageResult;
+
     }
 
     @Override

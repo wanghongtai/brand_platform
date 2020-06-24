@@ -25,7 +25,6 @@ public class BrandGnSmalltypeItemServiceImplTest {
         BrandGnSmalltypeItemVo vo = new BrandGnSmalltypeItemVo();
         vo.setSmallTypeId(1L);
 
-
         PagingResult<BrandGnSmalltypeItem> pagingResult =
                 brandGnSmalltypeItemService.findBrandGnSmalltypeItemList(vo, new LayuiPage());
 

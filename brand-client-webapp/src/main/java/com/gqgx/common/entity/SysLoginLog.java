@@ -9,6 +9,7 @@ public class SysLoginLog {
      * PK
      */
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     /**
