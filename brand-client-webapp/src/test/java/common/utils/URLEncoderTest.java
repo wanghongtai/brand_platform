@@ -11,6 +11,10 @@ import java.net.URLEncoder;
  */
 public class URLEncoderTest {
 
+    /**
+     * 测试提交是否包含iml文件
+     * @throws UnsupportedEncodingException
+     */
     @Test
     public void test() throws UnsupportedEncodingException {
         String name = "钙-calcium";
