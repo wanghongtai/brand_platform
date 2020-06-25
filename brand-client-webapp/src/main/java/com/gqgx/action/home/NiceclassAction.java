@@ -149,29 +149,35 @@ public class NiceclassAction extends HeaderAction{
 	@SuppressWarnings("deprecation")
 	@RequestMapping("/setNiceClassCookie")
 	public int setNiceClassCookie(HttpServletResponse response,HttpServletRequest request,CookieVo vo) {
-		List<CookieVo> list = new ArrayList<CookieVo>();
-		String nicelist = CookieUtil.getCookieValue(request, "niceclass");
-		if(!StringUtils.isEmpty(nicelist)) {
-			list = JSONArray.parseArray(nicelist,CookieVo.class);
-		}
-		
-		boolean addStatus = true;
-		if(list != null && list.size() > 0) {
-			for(CookieVo cookie : list) {
-				if(cookie.getId() == vo.getId()) {
-					addStatus = false;
-				}
+		try {
+			List<CookieVo> list = new ArrayList<CookieVo>();
+			String nicelist = CookieUtil.getCookieValue(request, "niceclass");
+			if(!StringUtils.isEmpty(nicelist)) {
+				list = JSONArray.parseArray(nicelist,CookieVo.class);
 			}
-			
+
+			boolean addStatus = true;
+			if(list != null && list.size() > 0) {
+				for(CookieVo cookie : list) {
+					if(cookie.getId() == vo.getId()) {
+						addStatus = false;
+					}
+				}
+
+			}
+			if(addStatus) {
+				CookieVo cookie = new CookieVo();
+				cookie.setId(vo.getId());
+				cookie.setName(java.net.URLEncoder.encode(vo.getName(), "UTF-8"));
+				list.add(cookie);
+			}
+			CookieUtil.setCookie(response, "niceclass", JSON.toJSONString(list));
+			return 1;
+		}catch (Exception e) {
+			System.err.println("设置cookie值错误" + e.getMessage());
+			return 0;
 		}
-		if(addStatus) {
-			CookieVo cookie = new CookieVo();
-			cookie.setId(vo.getId());
-			cookie.setName(java.net.URLEncoder.encode(vo.getName()));
-			list.add(cookie);
-		}
-		CookieUtil.setCookie(response, "niceclass", JSON.toJSONString(list));
-		return 1;
+
 	}
 	
 	/**

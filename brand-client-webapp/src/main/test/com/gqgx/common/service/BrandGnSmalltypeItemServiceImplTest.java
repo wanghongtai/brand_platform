@@ -23,8 +23,9 @@ public class BrandGnSmalltypeItemServiceImplTest {
     @Test
     public void test() throws Exception {
         BrandGnSmalltypeItemVo vo = new BrandGnSmalltypeItemVo();
-        vo.setSmallTypeId(1L);
-
+        vo.setSmallTypeId(2L);
+        vo.setLargeTypeId(1L);
+        vo.setFilter("醋酸");
 
         PagingResult<BrandGnSmalltypeItem> pagingResult =
                 brandGnSmalltypeItemService.findBrandGnSmalltypeItemList(vo, new LayuiPage());
