@@ -3,6 +3,7 @@ package com.gqgx.common.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.gqgx.common.criteria.Criteria;
 import com.gqgx.common.entity.BrandAuTypeItem;
+import com.gqgx.common.entity.BrandGnSmalltypeItem;
 import com.gqgx.common.entity.BrandLargeType;
 import com.gqgx.common.entity.RecordStatus;
 import com.gqgx.common.entity.vo.BrandAuTypeItemVo;
@@ -13,6 +14,8 @@ import com.gqgx.common.paging.PagingResult;
 import com.gqgx.common.service.BrandAuTypeItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.weekend.Weekend;
+import tk.mybatis.mapper.weekend.WeekendCriteria;
 
 import java.util.List;
 
@@ -73,19 +76,29 @@ public class BrandAuTypeItemServiceImpl implements BrandAuTypeItemService {
     }
 
     @Override
-    public PagingResult<BrandAuTypeItem> findBrandAuTypeItemList(BrandAuTypeItemVo type, LayuiPage page) {
+    public PagingResult<BrandAuTypeItem> findBrandAuTypeItemList(BrandAuTypeItemVo item, LayuiPage page) {
         Example example = new Example(BrandLargeType.class);
+        Example.Criteria criteria = example.createCriteria();
 
-        example.createCriteria().andEqualTo("record_status", RecordStatus.ACTIVE);
+        criteria.andEqualTo("record_status", RecordStatus.ACTIVE);
         example.setOrderByClause("type_no project_name ASC");
-        if(!Objects.isEmpty(type.getLargeTypeId())) {
-            example.createCriteria().andEqualTo("large_type_id", type.getLargeTypeId());
+        if(!Objects.isEmpty(item.getLargeTypeId())) {
+            example.createCriteria().andEqualTo("large_type_id", item.getLargeTypeId());
         }
+
+        //复杂 or条件查询
+        Weekend<BrandGnSmalltypeItem> weekend = new Weekend<>(BrandGnSmalltypeItem.class);
+        WeekendCriteria<BrandGnSmalltypeItem, Object> keywordCriteria = weekend.weekendCriteria();
+        if (!Objects.isEmpty(item.getFilter())) {
+            keywordCriteria.orLike("typeNo", "%" + item.getFilter().trim() + "%")
+                    .orLike("projectCnname", "%" + item.getFilter().trim() + "%");
+        }
+        weekend.and(criteria);
+
         if (page != null) {
             PageHelper.startPage(page.getPage(), page.getLimit());
         }
-
-        List<BrandAuTypeItem> list = brandAuTypeItemDAO.selectByExample(example);
+        List<BrandAuTypeItem> list = brandAuTypeItemDAO.selectByExample(weekend);
 
         PagingResult<BrandAuTypeItem> pageResult = new PagingResult<>(list);
         return pageResult;

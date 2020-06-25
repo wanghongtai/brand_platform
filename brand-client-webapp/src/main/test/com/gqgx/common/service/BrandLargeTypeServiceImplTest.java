@@ -1,11 +1,7 @@
 package com.gqgx.common.service;
 
-import com.gqgx.common.criteria.Criteria;
-import com.gqgx.common.entity.BrandGnSmalltypeItem;
 import com.gqgx.common.entity.BrandLargeType;
 import com.gqgx.common.entity.RecordStatus;
-import com.gqgx.common.entity.vo.BrandGnSmalltypeItemVo;
-import com.gqgx.common.entity.vo.BrandLargeTypeVo;
 import com.gqgx.common.paging.LayuiPage;
 import com.gqgx.common.paging.PagingResult;
 import org.junit.Test;
