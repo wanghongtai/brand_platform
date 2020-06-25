@@ -10,7 +10,6 @@
     <modules>
         <module>tkmybatisgenerator</module>
         <module>brand-client-webapp</module>
-        <module>initMapperAndService</module>
     </modules>
     <packaging>pom</packaging>
 
