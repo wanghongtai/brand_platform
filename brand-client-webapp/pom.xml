@@ -249,14 +249,7 @@
     </resources>
 
     <plugins>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <!--添加fork=true明确表示编译版本配置有效-->
-        <configuration>
-          <fork>true</fork>
-        </configuration>
-      </plugin>
+
     </plugins>
   </build>
 
