@@ -10,6 +10,7 @@
     <modules>
         <module>tkmybatisgenerator</module>
         <module>brand-client-webapp</module>
+        <module>brand-common-service</module>
     </modules>
     <packaging>pom</packaging>
 
