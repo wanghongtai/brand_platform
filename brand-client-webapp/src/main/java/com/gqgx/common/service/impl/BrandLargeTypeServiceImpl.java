@@ -18,35 +18,36 @@ import java.util.List;
 public class BrandLargeTypeServiceImpl implements BrandLargeTypeService {
 
     @Autowired
-    protected BrandLargeTypeMapper brandLargeTypeDAO;
+    protected BrandLargeTypeMapper mapper;
 
 
     @Override
     public BrandLargeType getBrandLargeType(Long id) {
-        return brandLargeTypeDAO.selectByPrimaryKey(id);
+        
+        return mapper.selectByPrimaryKey(id);
     }
 
     @Override
     public int saveBrandLargeType(BrandLargeType brandLargeType) {
         int count = 0;
         if(!Objects.isEmpty(brandLargeType.getId())){
-            count = brandLargeTypeDAO.updateByPrimaryKeySelective(brandLargeType);
+            count = mapper.updateByPrimaryKeySelective(brandLargeType);
         }else{
             //insert方法是使用所有的属性作为字段使用,如INSERT INTO tb_user (AGE,USER_NAME,ID,NAME,BIRTHDAY,SEX,PASSWORD,UPDATED,CREATED) VALUES ( ?,?,?,?,?,?,?,?,? )，Parameters: null, null, null, sansan(String), null, null, null, null, null
             //insertSelective插入数据，使用不为null的属性作为字段使用，如 INSERT INTO tb_user ( ID,NAME ) VALUES ( ?,? )，Parameters: null, test_insertSelective(String)
-            count = brandLargeTypeDAO.insertSelective(brandLargeType);
+            count = mapper.insertSelective(brandLargeType);
         }
         return count;
     }
 
     @Override
     public int deleteBrandLargeType(BrandLargeType brandLargeType) {
-        return brandLargeTypeDAO.deleteByPrimaryKey(brandLargeType);
+        return mapper.deleteByPrimaryKey(brandLargeType);
     }
 
     @Override
     public int deleteBrandLargeTypeByIds(Long[] ids) {
-        return brandLargeTypeDAO.deleteByIds(ids);
+        return mapper.deleteByIds(ids);
     }
 
     @Override
@@ -65,12 +66,12 @@ public class BrandLargeTypeServiceImpl implements BrandLargeTypeService {
         example.createCriteria().andEqualTo("recordStatus", RecordStatus.ACTIVE);
 
         example.setOrderByClause("catalog ASC");
-        List<BrandLargeType> brandLargeTypeList = brandLargeTypeDAO.selectByExample(example);
+        List<BrandLargeType> brandLargeTypeList = mapper.selectByExample(example);
 
         if (page != null) {
             PageHelper.startPage(page.getPage(), page.getLimit());
         }
-        List<BrandLargeType> list = brandLargeTypeDAO.selectByExample(example);
+        List<BrandLargeType> list = mapper.selectByExample(example);
 
         PagingResult<BrandLargeType> pageResult = new PagingResult<>(list);
         return pageResult;
@@ -89,7 +90,7 @@ public class BrandLargeTypeServiceImpl implements BrandLargeTypeService {
         example.createCriteria().andEqualTo("recordStatus", RecordStatus.ACTIVE);
 
         example.setOrderByClause("catalog ASC");
-        List<BrandLargeType> brandLargeTypeList = brandLargeTypeDAO.selectByExample(example);
+        List<BrandLargeType> brandLargeTypeList = mapper.selectByExample(example);
 
 
         return brandLargeTypeList;

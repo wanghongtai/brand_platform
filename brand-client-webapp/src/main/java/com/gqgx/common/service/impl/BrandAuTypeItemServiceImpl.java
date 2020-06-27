@@ -3,8 +3,6 @@ package com.gqgx.common.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.gqgx.common.criteria.Criteria;
 import com.gqgx.common.entity.BrandAuTypeItem;
-import com.gqgx.common.entity.BrandGnSmalltypeItem;
-import com.gqgx.common.entity.BrandLargeType;
 import com.gqgx.common.entity.RecordStatus;
 import com.gqgx.common.entity.vo.BrandAuTypeItemVo;
 import com.gqgx.common.lang.Objects;
@@ -61,7 +59,7 @@ public class BrandAuTypeItemServiceImpl implements BrandAuTypeItemService {
 
     @Override
     public PagingResult<BrandAuTypeItem> findBrandAuTypeItem(BrandAuTypeItem type, LayuiPage page) {
-        Example example = new Example(BrandLargeType.class);
+        Example example = new Example(BrandAuTypeItem.class);
 
         example.setOrderByClause("create_date DESC");
         if(!Objects.isEmpty(type.getProjectName())) {
@@ -77,21 +75,22 @@ public class BrandAuTypeItemServiceImpl implements BrandAuTypeItemService {
 
     @Override
     public PagingResult<BrandAuTypeItem> findBrandAuTypeItemList(BrandAuTypeItemVo item, LayuiPage page) {
-        Example example = new Example(BrandLargeType.class);
+        Example example = new Example(BrandAuTypeItem.class);
         Example.Criteria criteria = example.createCriteria();
 
-        criteria.andEqualTo("record_status", RecordStatus.ACTIVE);
+        criteria.andEqualTo("recordStatus", RecordStatus.ACTIVE);
         example.setOrderByClause("type_no project_name ASC");
         if(!Objects.isEmpty(item.getLargeTypeId())) {
-            example.createCriteria().andEqualTo("large_type_id", item.getLargeTypeId());
+            example.createCriteria().andEqualTo("largeTypeId", item.getLargeTypeId());
         }
 
         //复杂 or条件查询
-        Weekend<BrandGnSmalltypeItem> weekend = new Weekend<>(BrandGnSmalltypeItem.class);
-        WeekendCriteria<BrandGnSmalltypeItem, Object> keywordCriteria = weekend.weekendCriteria();
+        Weekend<BrandAuTypeItem> weekend = new Weekend<>(BrandAuTypeItem.class);
+        WeekendCriteria<BrandAuTypeItem, Object> keywordCriteria = weekend.weekendCriteria();
         if (!Objects.isEmpty(item.getFilter())) {
-            keywordCriteria.orLike("typeNo", "%" + item.getFilter().trim() + "%")
-                    .orLike("projectCnname", "%" + item.getFilter().trim() + "%");
+            keywordCriteria.orLike("projectName", "%" + item.getFilter().trim() + "%")
+                    .orLike("typeNo", "%" + item.getFilter().trim() + "%")
+                    .orLike("projectSource", "%" + item.getFilter().trim() + "%");
         }
         weekend.and(criteria);
 

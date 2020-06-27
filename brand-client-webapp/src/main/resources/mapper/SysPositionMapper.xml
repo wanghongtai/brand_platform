@@ -19,4 +19,11 @@
     <result column="updater_id" jdbcType="BIGINT" property="updaterId" />
     <result column="data_power" jdbcType="CHAR" property="dataPower" />
   </resultMap>
+  <!--根据主键id批量删除-->
+  <delete id="deleteByIds">
+    delete from sys_position where id in
+    <foreach item="id" collection="ids" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
 </mapper>

@@ -1,7 +1,7 @@
 package com.gqgx.common.entity;
 
-import java.util.Date;
 import javax.persistence.*;
+import java.util.Date;
 
 @Table(name = "brand_nav_item")
 public class BrandNavItem {

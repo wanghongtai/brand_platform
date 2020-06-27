@@ -1,38 +1,50 @@
 package com.gqgx.common.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.gqgx.common.criteria.Criteria;
 import com.gqgx.common.entity.BrandRussiaTypeItem;
+import com.gqgx.common.lang.Objects;
 import com.gqgx.common.mapper.BrandRussiaTypeItemMapper;
 import com.gqgx.common.paging.LayuiPage;
 import com.gqgx.common.paging.PagingResult;
 import com.gqgx.common.service.BrandRussiaTypeItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import tk.mybatis.mapper.entity.Example;
+
+import java.util.List;
 
 @org.springframework.stereotype.Service
 public class BrandRussiaTypeItemServiceImpl implements BrandRussiaTypeItemService {
 
     @Autowired
-    protected BrandRussiaTypeItemMapper brandRussiaTypeItemDAO;
+    protected BrandRussiaTypeItemMapper mapper;
 
 
     @Override
     public BrandRussiaTypeItem getBrandRussiaTypeItem(Long id) {
-        return null;
+        return mapper.selectByPrimaryKey(id);
     }
 
     @Override
     public int saveBrandRussiaTypeItem(BrandRussiaTypeItem brandRussiaTypeItem) {
-        return 0;
+
+        int count = 0;
+        if(!Objects.isEmpty(brandRussiaTypeItem.getId())){
+            count = mapper.updateByPrimaryKeySelective(brandRussiaTypeItem);
+        }else{
+            count = mapper.insertSelective(brandRussiaTypeItem);
+        }
+        return count;
     }
 
     @Override
     public int deleteBrandRussiaTypeItem(BrandRussiaTypeItem brandRussiaTypeItem) {
-        return 0;
+        return mapper.deleteByPrimaryKey(brandRussiaTypeItem);
     }
 
     @Override
     public int deleteBrandRussiaTypeItemByIds(Long[] ids) {
-        return 0;
+        return mapper.deleteByIds(ids);
     }
 
     @Override
@@ -42,11 +54,33 @@ public class BrandRussiaTypeItemServiceImpl implements BrandRussiaTypeItemServic
 
     @Override
     public PagingResult<BrandRussiaTypeItem> findBrandRussiaTypeItem(BrandRussiaTypeItem item, LayuiPage page) {
-        return null;
+        Example example = new Example(BrandRussiaTypeItem.class);
+        example.setOrderByClause("id DESC");
+
+        if(!Objects.isEmpty(item.getLargeTypeId())) {
+            example.createCriteria().andLike("large_type_id", item.getLargeTypeId().toString());
+        }
+        if (page != null) {
+            PageHelper.startPage(page.getPage(), page.getLimit());
+        }
+        List<BrandRussiaTypeItem> list = mapper.selectByExample(example);
+
+        PagingResult<BrandRussiaTypeItem> pageResult = new PagingResult<>(list);
+        return pageResult;
     }
 
     @Override
     public BrandRussiaTypeItem findBrandRussiaTypeItemByLargeId(Long largeTypeId) {
-        return null;
+        Example example = new Example(BrandRussiaTypeItem.class);
+        example.setOrderByClause("id DESC");
+        if(!Objects.isEmpty(largeTypeId)) {
+            example.createCriteria().andEqualTo("largeTypeId", largeTypeId);
+        }
+        List<BrandRussiaTypeItem> list = mapper.selectByExample(example);
+        if(list!=null&&list.size()>0) {
+            example.createCriteria().andEqualTo("largeTypeId", largeTypeId);
+        }
+        BrandRussiaTypeItem  Item =list.get(0);
+        return Item;
     }
 }
