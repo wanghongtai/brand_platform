@@ -118,11 +118,11 @@ public class RoleShiro extends AuthorizingRealm {
 
             //需连表查询，把系统菜单List<SysMenu> 添加到user
             //TODO:
-            List<SysMenu> sysMenuList = new ArrayList<>();
-            SysMenu sysMenu = new SysMenu();
-            sysMenu.setId(1L);
-            sysMenuList.add(sysMenu);
-            user.setSysMenus(sysMenuList);
+//            List<SysMenu> sysMenuList = new ArrayList<>();
+//            SysMenu sysMenu = new SysMenu();
+//            sysMenu.setId(1L);
+//            sysMenuList.add(sysMenu);
+//            user.setSysMenus(sysMenuList);
 
             SysUserUtil.getHttpSession().setAttribute("sysMenu", user.getSysMenus());
             SysUserUtil.getHttpSession().setAttribute("UserCompanyName", user.getCompanyName());
@@ -183,6 +183,7 @@ public class RoleShiro extends AuthorizingRealm {
         sysLoginLog.setLoginType(loginType);
         sysLoginLog.setSessionId(SysUserUtil.getHttpSession().getId());
         sysLoginLog.setUserId(userId);
+        sysLoginLog.setUpdateCount(0);
         sysLoginLogService.saveSysLoginLog(sysLoginLog);
     }
 }
