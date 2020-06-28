@@ -1,8 +1,11 @@
 package com.gqgx.common.service.impl;
 
 import com.gqgx.common.criteria.Criteria;
+import com.gqgx.common.entity.BrandLargeType;
 import com.gqgx.common.entity.SysMenuOperation;
 import com.gqgx.common.entity.SysUser;
+import com.gqgx.common.lang.Objects;
+import com.gqgx.common.lang.Strings;
 import com.gqgx.common.mapper.SysUserMapper;
 import com.gqgx.common.paging.LayuiPage;
 import com.gqgx.common.paging.Page;
@@ -11,6 +14,7 @@ import com.gqgx.common.service.SysPositionService;
 import com.gqgx.common.service.SysUserPositionService;
 import com.gqgx.common.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
@@ -83,7 +87,16 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public SysUser findUserByAccountName(String accountName) {
-        return null;
+        if (Strings.isBlank(accountName))
+        {
+            return null;
+        }
+//        Example example = new Example(SysUser.class);
+//        example.createCriteria().andEqualTo("accountName", accountName.trim());
+//        SysUser sysUser = new SysUser();
+//        sysUser.setAccountName(accountName.trim());
+        SysUser sysUser2 = sysUserDAO.findUserByAccountName(accountName.trim());
+        return sysUser2;
     }
 
     @Override

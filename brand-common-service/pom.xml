@@ -27,6 +27,7 @@
         <druid.version>1.0.9</druid.version>
         <tk.mybatis.version>4.0.4</tk.mybatis.version>
         <pagehelper.version>5.1.2</pagehelper.version>
+        <json-lib.version>2.1</json-lib.version>
     </properties>
 
     <dependencies>
@@ -190,6 +191,83 @@
             <version>${druid.version}</version>
         </dependency>
 
+        <!-- 腾讯云cos_api -->
+        <!--<dependency>-->
+        <!--<groupId>com.aliyun.oss</groupId>-->
+        <!--<artifactId>aliyun-sdk-oss</artifactId>-->
+        <!--<version>2.7.0</version>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>com.qcloud</groupId>
+            <artifactId>cos_api</artifactId>
+            <version>5.2.4</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!--腾讯云短信 -->
+        <dependency>
+            <groupId>com.github.qcloudsms</groupId>
+            <artifactId>qcloudsms</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <!--DOM4J-->
+        <dependency>
+            <groupId>org.dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>2.1.3</version>
+        </dependency>
+
+        <!--json工具包-->
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <classifier>jdk15</classifier>
+            <version>${json-lib.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!--Excel工具包-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.5-FINAL</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!--验证码工具包-->
+        <dependency>
+            <groupId>com.liferay</groupId>
+            <artifactId>nl.captcha.simplecaptcha</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
+        <!--gson工具包-->
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.5</version>
+        </dependency>
+
         <!--slf4j的支持，抽象门面-->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -219,11 +297,23 @@
         <resources>
             <resource>
                 <directory>src/main/java</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>*.properties</exclude>
+                    <exclude>*.xml</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>*.xml</exclude>
+                    <exclude>*.properties</exclude>
+                </excludes>
+                <!--打包brand-common-service只包含mapper下的资源文件-->
                 <includes>
-                    <!--打包brand-common-service只包含mapper下的资源文件-->
                     <include>mapper/*.xml</include>
                 </includes>
-                <filtering>false</filtering>
             </resource>
         </resources>
         <plugins>

@@ -2,6 +2,9 @@ package com.gqgx.common.service;
 
 import com.gqgx.common.criteria.Criteria;
 import com.gqgx.common.entity.SysMenu;
+import com.gqgx.common.entity.SysMenuTreeVO;
+import com.gqgx.common.entity.vo.NodeTreeVo;
+import com.gqgx.common.entity.vo.SortableVo;
 import com.gqgx.common.paging.PagingResult;
 
 import java.util.List;
@@ -18,20 +21,24 @@ public interface SysMenuService {
     int deleteSysMenuByIds(Long[] ids);
 
     PagingResult<SysMenu> findSysMenu(Criteria criteria);
-    
+
     public List<SysMenu> listAllMenus(Long companyId);
-    
+
+    public List<NodeTreeVo> findAll(Long companyId);
 
     public int saveOrUpdateMenu(SysMenu sysMenu);
-    
+
     public int isExsit(SysMenu sysMenu);
-    
 
-	int maxSort();
+    public List<SysMenuTreeVO> listAllMenuAndOperationByUserId(Long userId, Long companyId);
 
-	int reSortable(String ids);
+    List<SortableVo> sortableList();
 
-	List<SysMenu> parList();
+    int maxSort();
 
-	List<SysMenu> menuLPowerist(Long positionId);
+    int reSortable(String ids);
+
+    List<SysMenu> parList();
+
+    List<SysMenu> menuLPowerist(Long positionId);
 }

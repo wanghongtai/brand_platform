@@ -2,9 +2,61 @@ package com.gqgx.common.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Table(name = "sys_user")
 public class SysUser {
+
+
+    /*************************************** 追加字段开始***************************************/
+    /** * 描述:<p>TODO</p>
+     * @Fields serialVersionUID
+     */
+    private static final long serialVersionUID = -279125948122252876L;
+
+    private String oldPassWord;
+
+    private String departmentName;//部门名称
+
+    private String positionName;//职位名称
+
+    private String companyName; //公司名称
+
+    private String areaName;//工作地点
+
+    private Long positionId;//职位id
+
+    private String birthdayStr;
+
+    private String entryDateStr;
+
+    private List<SysUserPosition> userPositions;//员工职位
+
+    private String dataPower; //数据权限
+
+    private List<SysMenu> sysMenus;
+
+    private List<SysMenuOperation> menuOperations;
+
+    private List<Long> deparmentIds;
+
+    private Long defaultMenuId;
+
+    private String defaultMenuName;
+
+    private String defaultUrl;
+
+    private String companyAbb;
+
+    private String accountPrefix;
+
+    private String companyAddress;
+
+    private String companyUrl;
+
+    private String joinTable;
+
+   /*************************************** 追加字段结束**************************************/
     /**
      * 表主键
      */
@@ -826,5 +878,236 @@ public class SysUser {
      */
     public void setBranchCompanyId(Long branchCompanyId) {
         this.branchCompanyId = branchCompanyId;
+    }
+
+
+    public String getOldPassWord() {
+        return oldPassWord;
+    }
+
+    public void setOldPassWord(String oldPassWord) {
+        this.oldPassWord = oldPassWord;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
+    }
+
+    public String getPositionName() {
+        return positionName;
+    }
+
+    public void setPositionName(String positionName) {
+        this.positionName = positionName;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
+    }
+
+    public Long getPositionId() {
+        return positionId;
+    }
+
+    public void setPositionId(Long positionId) {
+        this.positionId = positionId;
+    }
+
+    public String getBirthdayStr() {
+        return birthdayStr;
+    }
+
+    public void setBirthdayStr(String birthdayStr) {
+        this.birthdayStr = birthdayStr;
+    }
+
+    public String getEntryDateStr() {
+        return entryDateStr;
+    }
+
+    public void setEntryDateStr(String entryDateStr) {
+        this.entryDateStr = entryDateStr;
+    }
+
+    public List<SysUserPosition> getUserPositions() {
+        return userPositions;
+    }
+
+    public void setUserPositions(List<SysUserPosition> userPositions) {
+        this.userPositions = userPositions;
+    }
+
+    public String getDataPower() {
+        return dataPower;
+    }
+
+    public void setDataPower(String dataPower) {
+        this.dataPower = dataPower;
+    }
+
+    public List<SysMenu> getSysMenus() {
+        return sysMenus;
+    }
+
+    public void setSysMenus(List<SysMenu> sysMenus) {
+        this.sysMenus = sysMenus;
+    }
+
+    public List<SysMenuOperation> getMenuOperations() {
+        return menuOperations;
+    }
+
+    public void setMenuOperations(List<SysMenuOperation> menuOperations) {
+        this.menuOperations = menuOperations;
+    }
+
+    public List<Long> getDeparmentIds() {
+        return deparmentIds;
+    }
+
+    public void setDeparmentIds(List<Long> deparmentIds) {
+        this.deparmentIds = deparmentIds;
+    }
+
+    public Long getDefaultMenuId() {
+        return defaultMenuId;
+    }
+
+    public void setDefaultMenuId(Long defaultMenuId) {
+        this.defaultMenuId = defaultMenuId;
+    }
+
+    public String getDefaultMenuName() {
+        return defaultMenuName;
+    }
+
+    public void setDefaultMenuName(String defaultMenuName) {
+        this.defaultMenuName = defaultMenuName;
+    }
+
+    public String getDefaultUrl() {
+        return defaultUrl;
+    }
+
+    public void setDefaultUrl(String defaultUrl) {
+        this.defaultUrl = defaultUrl;
+    }
+
+    public String getCompanyAbb() {
+        return companyAbb;
+    }
+
+    public void setCompanyAbb(String companyAbb) {
+        this.companyAbb = companyAbb;
+    }
+
+    public String getAccountPrefix() {
+        return accountPrefix;
+    }
+
+    public void setAccountPrefix(String accountPrefix) {
+        this.accountPrefix = accountPrefix;
+    }
+
+    public String getCompanyAddress() {
+        return companyAddress;
+    }
+
+    public void setCompanyAddress(String companyAddress) {
+        this.companyAddress = companyAddress;
+    }
+
+    public String getCompanyUrl() {
+        return companyUrl;
+    }
+
+    public void setCompanyUrl(String companyUrl) {
+        this.companyUrl = companyUrl;
+    }
+
+    public String getJoinTable() {
+        return joinTable;
+    }
+
+    public void setJoinTable(String joinTable) {
+        this.joinTable = joinTable;
+    }
+
+    @Override
+    public String toString() {
+        return "SysUser{" +
+                "oldPassWord='" + oldPassWord + '\'' +
+                ", departmentName='" + departmentName + '\'' +
+                ", positionName='" + positionName + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", areaName='" + areaName + '\'' +
+                ", positionId=" + positionId +
+                ", birthdayStr='" + birthdayStr + '\'' +
+                ", entryDateStr='" + entryDateStr + '\'' +
+                ", userPositions=" + userPositions +
+                ", dataPower='" + dataPower + '\'' +
+                ", sysMenus=" + sysMenus +
+                ", menuOperations=" + menuOperations +
+                ", deparmentIds=" + deparmentIds +
+                ", defaultMenuId=" + defaultMenuId +
+                ", defaultMenuName='" + defaultMenuName + '\'' +
+                ", defaultUrl='" + defaultUrl + '\'' +
+                ", companyAbb='" + companyAbb + '\'' +
+                ", accountPrefix='" + accountPrefix + '\'' +
+                ", companyAddress='" + companyAddress + '\'' +
+                ", companyUrl='" + companyUrl + '\'' +
+                ", joinTable='" + joinTable + '\'' +
+                ", id=" + id +
+                ", accountName='" + accountName + '\'' +
+                ", passWord='" + passWord + '\'' +
+                ", name='" + name + '\'' +
+                ", code='" + code + '\'' +
+                ", sex='" + sex + '\'' +
+                ", birthday=" + birthday +
+                ", entryDate=" + entryDate +
+                ", departmentId=" + departmentId +
+                ", photoId=" + photoId +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", contacts='" + contacts + '\'' +
+                ", contactsPhone='" + contactsPhone + '\'' +
+                ", address='" + address + '\'' +
+                ", school='" + school + '\'' +
+                ", major='" + major + '\'' +
+                ", graduation=" + graduation +
+                ", education='" + education + '\'' +
+                ", origin='" + origin + '\'' +
+                ", race='" + race + '\'' +
+                ", marriage='" + marriage + '\'' +
+                ", political='" + political + '\'' +
+                ", remark='" + remark + '\'' +
+                ", userStatus='" + userStatus + '\'' +
+                ", userType='" + userType + '\'' +
+                ", companyId=" + companyId +
+                ", recordStatus='" + recordStatus + '\'' +
+                ", updateCount=" + updateCount +
+                ", createDate=" + createDate +
+                ", creatorId=" + creatorId +
+                ", updateDate=" + updateDate +
+                ", updaterId=" + updaterId +
+                ", branchCompanyId=" + branchCompanyId +
+                '}';
     }
 }

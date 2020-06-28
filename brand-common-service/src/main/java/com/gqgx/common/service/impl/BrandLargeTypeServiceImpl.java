@@ -65,8 +65,6 @@ public class BrandLargeTypeServiceImpl implements BrandLargeTypeService {
         example.createCriteria().andEqualTo("recordStatus", RecordStatus.ACTIVE);
 
         example.setOrderByClause("catalog ASC");
-        List<BrandLargeType> brandLargeTypeList = brandLargeTypeDAO.selectByExample(example);
-
         if (page != null) {
             PageHelper.startPage(page.getPage(), page.getLimit());
         }

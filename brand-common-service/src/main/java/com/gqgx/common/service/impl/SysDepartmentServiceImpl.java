@@ -2,6 +2,8 @@ package com.gqgx.common.service.impl;
 
 import com.gqgx.common.criteria.Criteria;
 import com.gqgx.common.entity.SysDepartment;
+import com.gqgx.common.entity.vo.LayUITreeVo;
+import com.gqgx.common.entity.vo.NodeTreeVo;
 import com.gqgx.common.mapper.SysDepartmentMapper;
 import com.gqgx.common.paging.PagingResult;
 import com.gqgx.common.service.SysDepartmentService;
@@ -82,7 +84,17 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
     }
 
     @Override
+    public List<LayUITreeVo> getDepartmentTree() {
+        return null;
+    }
+
+    @Override
     public List<Long> findSonDepartment(Long departmentId) {
+        return null;
+    }
+
+    @Override
+    public List<NodeTreeVo> getDepartmentUserTree(Long currentCompanyId) {
         return null;
     }
 

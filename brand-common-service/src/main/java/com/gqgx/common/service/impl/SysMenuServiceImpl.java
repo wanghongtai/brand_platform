@@ -2,6 +2,9 @@ package com.gqgx.common.service.impl;
 
 import com.gqgx.common.criteria.Criteria;
 import com.gqgx.common.entity.SysMenu;
+import com.gqgx.common.entity.SysMenuTreeVO;
+import com.gqgx.common.entity.vo.NodeTreeVo;
+import com.gqgx.common.entity.vo.SortableVo;
 import com.gqgx.common.mapper.SysMenuMapper;
 import com.gqgx.common.paging.PagingResult;
 import com.gqgx.common.service.SysMenuService;
@@ -11,10 +14,6 @@ import java.util.List;
 
 @org.springframework.stereotype.Service
 public class SysMenuServiceImpl implements SysMenuService {
-
-    @Autowired
-    protected SysMenuMapper sysMenuDAO;
-
 
     @Override
     public SysMenu getSysMenu(Long id) {
@@ -47,6 +46,11 @@ public class SysMenuServiceImpl implements SysMenuService {
     }
 
     @Override
+    public List<NodeTreeVo> findAll(Long companyId) {
+        return null;
+    }
+
+    @Override
     public int saveOrUpdateMenu(SysMenu sysMenu) {
         return 0;
     }
@@ -54,6 +58,16 @@ public class SysMenuServiceImpl implements SysMenuService {
     @Override
     public int isExsit(SysMenu sysMenu) {
         return 0;
+    }
+
+    @Override
+    public List<SysMenuTreeVO> listAllMenuAndOperationByUserId(Long userId, Long companyId) {
+        return null;
+    }
+
+    @Override
+    public List<SortableVo> sortableList() {
+        return null;
     }
 
     @Override

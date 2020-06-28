@@ -41,4 +41,13 @@
     <result column="updater_id" jdbcType="BIGINT" property="updaterId" />
     <result column="branch_company_id" jdbcType="BIGINT" property="branchCompanyId" />
   </resultMap>
+
+  <select id="findUserByAccountName" resultMap="BaseResultMap">
+     SELECT
+     id,account_name,pass_word,NAME,CODE,sex,birthday,entry_date,
+     department_id,photo_id,phone,email,telephone,contacts,contacts_phone,address,school,major,graduation,
+     education,origin,race,marriage,political,remark,user_status,user_type,company_id,record_status,update_count,
+     create_date,creator_id,update_date,updater_id,branch_company_id
+      FROM sys_user  WHERE  account_name = #{accountName}
+  </select>
 </mapper>

@@ -1,25 +1,18 @@
 package com.gqgx.common.service.impl;
 
 import com.gqgx.common.criteria.Criteria;
+import com.gqgx.common.entity.PostionPermissionVO;
 import com.gqgx.common.entity.SysPosition;
-import com.gqgx.common.mapper.SysPositionMapper;
+import com.gqgx.common.entity.vo.SysPositionVo;
 import com.gqgx.common.paging.LayuiPage;
 import com.gqgx.common.paging.Page;
 import com.gqgx.common.paging.PagingResult;
-import com.gqgx.common.service.SysPositionPermissionsService;
 import com.gqgx.common.service.SysPositionService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 @org.springframework.stereotype.Service
 public class SysPositionServiceImpl implements SysPositionService {
-
-    @Autowired
-    protected SysPositionMapper sysPositionDAO;
-    
-    @Autowired
-    protected SysPositionPermissionsService sysPositionPermissionsService;
 
     @Override
     public SysPosition getSysPosition(Long id) {
@@ -68,6 +61,21 @@ public class SysPositionServiceImpl implements SysPositionService {
 
     @Override
     public SysPosition findPositionById(Long positionId, Long companyId) {
+        return null;
+    }
+
+    @Override
+    public PostionPermissionVO findPostionPermisstionsById(Long positionId, Long companyId) {
+        return null;
+    }
+
+    @Override
+    public PostionPermissionVO findPostsByUserId(Long userId) {
+        return null;
+    }
+
+    @Override
+    public List<SysPositionVo> findPositionList(Long userId) {
         return null;
     }
 
