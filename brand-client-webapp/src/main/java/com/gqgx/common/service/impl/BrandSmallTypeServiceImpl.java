@@ -1,12 +1,16 @@
 package com.gqgx.common.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.gqgx.common.criteria.Criteria;
+import com.gqgx.common.entity.BrandLargeType;
 import com.gqgx.common.entity.BrandSmallType;
+import com.gqgx.common.lang.Objects;
 import com.gqgx.common.mapper.BrandSmallTypeMapper;
 import com.gqgx.common.paging.LayuiPage;
 import com.gqgx.common.paging.PagingResult;
 import com.gqgx.common.service.BrandSmallTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
@@ -14,31 +18,41 @@ import java.util.List;
 public class BrandSmallTypeServiceImpl implements BrandSmallTypeService {
 
 	@Autowired
-	protected BrandSmallTypeMapper brandSmallTypeDAO;
+	protected BrandSmallTypeMapper mapper;
 
 	@Override
 	public BrandSmallType getBrandSmallType(String smallNo) {
-		return null;
+
+		return mapper.selectByPrimaryKey(smallNo);
 	}
 
 	@Override
 	public BrandSmallType getBrandSmallType(Long SmallTypeId) {
-		return null;
+		return mapper.selectByPrimaryKey(SmallTypeId);
 	}
 
 	@Override
 	public int saveBrandSmallType(BrandSmallType brandSmallType) {
-		return 0;
+
+		int count = 0;
+		if(!Objects.isEmpty(brandSmallType.getId())){
+			count = mapper.updateByPrimaryKeySelective(brandSmallType);
+		}else{
+			count = mapper.insertSelective(brandSmallType);
+		}
+		return count;
 	}
 
 	@Override
 	public int deleteBrandSmallType(BrandSmallType brandSmallType) {
-		return 0;
+
+		return mapper.deleteByPrimaryKey(brandSmallType);
 	}
 
 	@Override
 	public int deleteBrandSmallTypeByIds(Long[] ids) {
-		return 0;
+
+		return mapper.deleteByIds(ids);
 	}
 
 	@Override
@@ -48,7 +62,19 @@ public class BrandSmallTypeServiceImpl implements BrandSmallTypeService {
 
 	@Override
 	public PagingResult<BrandSmallType> findBrandSmallType(BrandSmallType brandSmallType, LayuiPage page) {
-		return null;
+		Example example = new Example(BrandLargeType.class);
+		example.setOrderByClause("large_type_id DESC");
+
+		if(!Objects.isEmpty(brandSmallType.getLargeTypeId())) {
+			example.createCriteria().andLike("large_type_id", brandSmallType.getLargeTypeId().toString());
+		}
+		if (page != null) {
+			PageHelper.startPage(page.getPage(), page.getLimit());
+		}
+		List<BrandSmallType> list = mapper.selectByExample(example);
+
+		PagingResult<BrandSmallType> pageResult = new PagingResult<>(list);
+		return pageResult;
 	}
 
 	@Override

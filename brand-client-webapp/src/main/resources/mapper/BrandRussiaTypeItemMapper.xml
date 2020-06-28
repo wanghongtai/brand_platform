@@ -16,4 +16,11 @@
     <result column="updater_id" jdbcType="BIGINT" property="updaterId" />
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
+  <!--根据主键id批量删除-->
+  <delete id="deleteByIds">
+    delete from brand_small_type where id in
+    <foreach item="id" collection="ids" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
 </mapper>

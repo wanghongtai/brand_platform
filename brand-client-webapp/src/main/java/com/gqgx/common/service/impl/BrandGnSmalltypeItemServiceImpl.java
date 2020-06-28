@@ -3,7 +3,7 @@ package com.gqgx.common.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.gqgx.common.criteria.Criteria;
 import com.gqgx.common.entity.BrandGnSmalltypeItem;
-import com.gqgx.common.entity.RecordStatus;
+import com.gqgx.common.entity.BrandLargeType;
 import com.gqgx.common.entity.vo.BrandGnSmalltypeItemVo;
 import com.gqgx.common.lang.Objects;
 import com.gqgx.common.mapper.BrandGnSmalltypeItemMapper;
@@ -12,8 +12,6 @@ import com.gqgx.common.paging.PagingResult;
 import com.gqgx.common.service.BrandGnSmalltypeItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Example;
-import tk.mybatis.mapper.weekend.Weekend;
-import tk.mybatis.mapper.weekend.WeekendCriteria;
 
 import java.util.List;
 
@@ -21,27 +19,37 @@ import java.util.List;
 public class BrandGnSmalltypeItemServiceImpl implements BrandGnSmalltypeItemService {
 
     @Autowired
-    protected BrandGnSmalltypeItemMapper brandGnSmalltypeItemDAO;
+    protected BrandGnSmalltypeItemMapper mapper;
 
 
     @Override
     public BrandGnSmalltypeItem getBrandGnSmalltypeItem(Long id) {
-        return null;
+
+        return mapper.selectByPrimaryKey(id);
     }
 
     @Override
     public int saveBrandGnSmalltypeItem(BrandGnSmalltypeItem brandGnSmalltypeItem) {
-        return 0;
+
+        int count = 0;
+        if(!Objects.isEmpty(brandGnSmalltypeItem.getId())){
+            count = mapper.updateByPrimaryKeySelective(brandGnSmalltypeItem);
+        }else{
+            count = mapper.insertSelective(brandGnSmalltypeItem);
+        }
+        return count;
     }
 
     @Override
     public int deleteBrandGnSmalltypeItem(BrandGnSmalltypeItem brandGnSmalltypeItem) {
-        return 0;
+
+        return mapper.deleteByPrimaryKey(brandGnSmalltypeItem);
     }
 
     @Override
     public int deleteBrandGnSmalltypeItemByIds(Long[] ids) {
-        return 0;
+       return mapper.deleteByPrimaryKey(ids);
+     //   return  mapper.
     }
 
     @Override
@@ -51,7 +59,19 @@ public class BrandGnSmalltypeItemServiceImpl implements BrandGnSmalltypeItemServ
 
     @Override
     public PagingResult<BrandGnSmalltypeItem> findBrandGnSmalltypeItem(BrandGnSmalltypeItem item, LayuiPage page) {
-        return null;
+        Example example = new Example(BrandLargeType.class);
+        example.setOrderByClause("create_date DESC");
+
+        if(!Objects.isEmpty(item.getSmallTypeId())) {
+            example.createCriteria().andLike("project_name", item.getSmallTypeId().toString());
+        }
+        if (page != null) {
+            PageHelper.startPage(page.getPage(), page.getLimit());
+        }
+        List<BrandGnSmalltypeItem> list = mapper.selectByExample(example);
+
+        PagingResult<BrandGnSmalltypeItem> pageResult = new PagingResult<>(list);
+        return pageResult;
     }
 
     @Override
@@ -85,11 +105,12 @@ public class BrandGnSmalltypeItemServiceImpl implements BrandGnSmalltypeItemServ
 //        }
 //        List<BrandGnSmalltypeItem> list = brandGnSmalltypeItemDAO.selectByExample(weekend);
 
+
         //分页插件，自动添加分页语句
         if (page != null) {
             PageHelper.startPage(page.getPage(), page.getLimit());
         }
-        List<BrandGnSmalltypeItem> list = brandGnSmalltypeItemDAO.findByBrandGnSmalltypeItemVo(item);
+        List<BrandGnSmalltypeItem> list = mapper.findByBrandGnSmalltypeItemVo(item);
 
         PagingResult<BrandGnSmalltypeItem> pageResult = new PagingResult<>(list);
         return pageResult;

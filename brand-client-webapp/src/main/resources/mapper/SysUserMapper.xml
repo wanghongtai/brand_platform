@@ -41,4 +41,11 @@
     <result column="updater_id" jdbcType="BIGINT" property="updaterId" />
     <result column="branch_company_id" jdbcType="BIGINT" property="branchCompanyId" />
   </resultMap>
+  <!--根据主键id批量删除-->
+  <delete id="deleteByIds">
+    delete from sys_user where id in
+    <foreach item="id" collection="ids" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
 </mapper>

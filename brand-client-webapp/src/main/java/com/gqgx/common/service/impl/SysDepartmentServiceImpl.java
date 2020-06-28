@@ -2,6 +2,7 @@ package com.gqgx.common.service.impl;
 
 import com.gqgx.common.criteria.Criteria;
 import com.gqgx.common.entity.SysDepartment;
+import com.gqgx.common.lang.Objects;
 import com.gqgx.common.mapper.SysDepartmentMapper;
 import com.gqgx.common.paging.PagingResult;
 import com.gqgx.common.service.SysDepartmentService;
@@ -14,30 +15,42 @@ import java.util.Map;
 public class SysDepartmentServiceImpl implements SysDepartmentService {
 
     @Autowired
-    protected SysDepartmentMapper sysDepartmentDAO;
+    protected SysDepartmentMapper mapper;
 
     @Override
     public SysDepartment getSysDepartment(Long id) {
-        return null;
+
+        return mapper.selectByPrimaryKey(id);
     }
 
     @Override
     public int saveSysDepartment(SysDepartment sysDepartment) {
-        return 0;
+
+
+        int count = 0;
+        if(!Objects.isEmpty(sysDepartment.getId())){
+            count = mapper.updateByPrimaryKeySelective(sysDepartment);
+        }else{
+            count = mapper.insertSelective(sysDepartment);
+        }
+        return count;
     }
 
     @Override
     public int deleteSysDepartment(SysDepartment sysDepartment) {
-        return 0;
+
+        return mapper.deleteByPrimaryKey(sysDepartment);
     }
 
     @Override
     public int deleteSysDepartmentByIds(Long[] ids) {
-        return 0;
+
+        return mapper.deleteByIds(ids);
     }
 
     @Override
     public PagingResult<SysDepartment> findSysDepartment(Criteria criteria) {
+
         return null;
     }
 

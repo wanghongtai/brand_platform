@@ -4,4 +4,5 @@ import com.gqgx.common.entity.SysMenu;
 import tk.mybatis.mapper.common.Mapper;
 
 public interface SysMenuMapper extends Mapper<SysMenu> {
+    int deleteByIds(Long[] ids);
 }

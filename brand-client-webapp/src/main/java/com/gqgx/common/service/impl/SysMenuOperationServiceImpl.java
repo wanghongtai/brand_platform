@@ -2,6 +2,7 @@ package com.gqgx.common.service.impl;
 
 import com.gqgx.common.criteria.Criteria;
 import com.gqgx.common.entity.SysMenuOperation;
+import com.gqgx.common.lang.Objects;
 import com.gqgx.common.mapper.SysMenuOperationMapper;
 import com.gqgx.common.paging.PagingResult;
 import com.gqgx.common.service.SysMenuOperationService;
@@ -11,27 +12,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class SysMenuOperationServiceImpl implements SysMenuOperationService {
 
     @Autowired
-    protected SysMenuOperationMapper sysMenuOperationDAO;
+    protected SysMenuOperationMapper mapper;
 
 
     @Override
     public SysMenuOperation getSysMenuOperation(Long id) {
-        return null;
+        return mapper.selectByPrimaryKey(id);
     }
 
     @Override
     public int saveSysMenuOperation(SysMenuOperation sysMenuOperation) {
-        return 0;
+
+        int count = 0;
+        if(!Objects.isEmpty(sysMenuOperation.getId())){
+            count = mapper.updateByPrimaryKeySelective(sysMenuOperation);
+        }else{
+            count = mapper.insertSelective(sysMenuOperation);
+        }
+        return count;
     }
 
     @Override
     public int deleteSysMenuOperation(SysMenuOperation sysMenuOperation) {
-        return 0;
+
+        return mapper.deleteByPrimaryKey(sysMenuOperation);
     }
 
     @Override
     public int deleteSysMenuOperationByIds(Long[] ids) {
-        return 0;
+
+        return mapper.deleteByIds(ids);
     }
 
     @Override

@@ -1,10 +1,14 @@
 package com.gqgx.common.entity;
 
-import java.util.Date;
 import javax.persistence.*;
+import java.util.Date;
 
 @Table(name = "brand_usa_type_item")
 public class BrandUsaTypeItem {
+    /*
+    * 新增字段
+    * */
+    private BrandLargeType brandLargeType;
     /**
      * 主键
      */
@@ -22,7 +26,7 @@ public class BrandUsaTypeItem {
      * 类-编号
      */
     @Column(name = "type_no")
-    private String typeNo;
+        private String typeNo;
 
     @Column(name = "project_name")
     private String projectName;
@@ -357,5 +361,13 @@ public class BrandUsaTypeItem {
      */
     public void setUpdaterId(Long updaterId) {
         this.updaterId = updaterId;
+    }
+
+    public BrandLargeType getBrandLargeType() {
+        return brandLargeType;
+    }
+
+    public void setBrandLargeType(BrandLargeType brandLargeType) {
+        this.brandLargeType = brandLargeType;
     }
 }

@@ -21,4 +21,11 @@
     <result column="old_department_id" jdbcType="BIGINT" property="oldDepartmentId" />
     <result column="is_branch_company" jdbcType="CHAR" property="isBranchCompany" />
   </resultMap>
+  <!--根据主键id批量删除-->
+  <delete id="deleteByIds">
+    delete from sys_department where id in
+    <foreach item="id" collection="ids" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
 </mapper>

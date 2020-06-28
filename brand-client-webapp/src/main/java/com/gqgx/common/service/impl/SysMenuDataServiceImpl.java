@@ -2,6 +2,7 @@ package com.gqgx.common.service.impl;
 
 import com.gqgx.common.criteria.Criteria;
 import com.gqgx.common.entity.SysMenuData;
+import com.gqgx.common.lang.Objects;
 import com.gqgx.common.mapper.SysMenuDataMapper;
 import com.gqgx.common.paging.PagingResult;
 import com.gqgx.common.service.SysMenuDataService;
@@ -11,31 +12,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class SysMenuDataServiceImpl implements SysMenuDataService {
 
     @Autowired
-    protected SysMenuDataMapper sysMenuDataDAO;
+    protected SysMenuDataMapper mapper;
 
 
     @Override
     public SysMenuData getSysMenuData(Long id) {
-        return null;
+
+        return mapper.selectByPrimaryKey(id);
     }
 
     @Override
     public int saveSysMenuData(SysMenuData sysMenuData) {
-        return 0;
+        int count = 0;
+        if(!Objects.isEmpty(sysMenuData.getId())){
+            count = mapper.updateByPrimaryKeySelective(sysMenuData);
+        }else{
+            count = mapper.insertSelective(sysMenuData);
+        }
+        return count;
     }
 
     @Override
     public int deleteSysMenuData(SysMenuData sysMenuData) {
-        return 0;
+
+        return mapper.deleteByPrimaryKey(sysMenuData);
     }
 
     @Override
     public int deleteSysMenuDataByIds(Long[] ids) {
-        return 0;
+
+        return mapper.deleteByIds(ids);
     }
 
     @Override
-    public PagingResult<SysMenuData> findSysMenuData(Criteria criteria) {
+        public PagingResult<SysMenuData> findSysMenuData(Criteria criteria) {
         return null;
     }
 }

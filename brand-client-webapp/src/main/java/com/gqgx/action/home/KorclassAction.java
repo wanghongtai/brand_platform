@@ -1,18 +1,5 @@
 package com.gqgx.action.home;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.gqgx.action.header.HeaderAction;
@@ -25,6 +12,18 @@ import com.gqgx.common.paging.PagingResult;
 import com.gqgx.common.service.BrandKorTypeItemService;
 import com.gqgx.common.service.BrandLargeTypeService;
 import com.gqgx.utils.CookieUtil;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class KorclassAction extends HeaderAction {
@@ -118,6 +117,7 @@ public class KorclassAction extends HeaderAction {
     @SuppressWarnings("deprecation")
     @RequestMapping("/setKorClassCookie")
     public int setKorClassCookie(HttpServletResponse response, HttpServletRequest request, CookieVo vo) {
+        try {
         List<CookieVo> list = new ArrayList<CookieVo>();
         String nicelist = CookieUtil.getCookieValue(request, "korclass");
         if (!StringUtils.isEmpty(nicelist)) {
@@ -136,11 +136,17 @@ public class KorclassAction extends HeaderAction {
         if (addStatus) {
             CookieVo cookie = new CookieVo();
             cookie.setId(vo.getId());
-            cookie.setName(java.net.URLEncoder.encode(vo.getName()));
+
+                cookie.setName(java.net.URLEncoder.encode(vo.getName(),"utf-8"));
+
             list.add(cookie);
         }
         CookieUtil.setCookie(response, "korclass", JSON.toJSONString(list));
         return 1;
+        } catch (UnsupportedEncodingException e) {
+            System.out.println("设置cookie值错误" + e.getMessage());
+            return 0;
+        }
     }
 
     /**

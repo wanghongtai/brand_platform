@@ -2,6 +2,7 @@ package com.gqgx.common.service.impl;
 
 import com.gqgx.common.criteria.Criteria;
 import com.gqgx.common.entity.SysMenu;
+import com.gqgx.common.lang.Objects;
 import com.gqgx.common.mapper.SysMenuMapper;
 import com.gqgx.common.paging.PagingResult;
 import com.gqgx.common.service.SysMenuService;
@@ -13,27 +14,36 @@ import java.util.List;
 public class SysMenuServiceImpl implements SysMenuService {
 
     @Autowired
-    protected SysMenuMapper sysMenuDAO;
+    protected SysMenuMapper mapper;
 
 
     @Override
     public SysMenu getSysMenu(Long id) {
-        return null;
+
+        return mapper.selectByPrimaryKey(id);
     }
 
     @Override
     public int saveSysMenu(SysMenu sysMenu) {
-        return 0;
+        int count = 0;
+        if(!Objects.isEmpty(sysMenu.getId())){
+            count = mapper.updateByPrimaryKeySelective(sysMenu);
+        }else{
+            count = mapper.insertSelective(sysMenu);
+        }
+        return count;
     }
 
     @Override
     public int deleteSysMenu(SysMenu sysMenu) {
-        return 0;
+
+        return mapper.deleteByPrimaryKey(sysMenu);
     }
 
     @Override
     public int deleteSysMenuByIds(Long[] ids) {
-        return 0;
+
+        return mapper.deleteByIds(ids);
     }
 
     @Override
