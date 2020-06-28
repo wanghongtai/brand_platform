@@ -35,6 +35,13 @@
   </properties>
 
   <dependencies>
+    <!--添加brand-commom-service依赖-->
+    <dependency>
+      <groupId>com.gqgx.platform</groupId>
+      <artifactId>brand-common-service</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+
     <!--apache common工具包-->
     <dependency>
       <groupId>org.apache.commons</groupId>
@@ -249,7 +256,14 @@
     </resources>
 
     <plugins>
-
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <!--添加fork=true明确表示编译版本配置有效-->
+        <configuration>
+          <fork>true</fork>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
