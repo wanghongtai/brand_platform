@@ -8,6 +8,8 @@ import com.gqgx.common.paging.PagingResult;
 import com.gqgx.common.service.SysLoginLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
+
 @org.springframework.stereotype.Service
 public class SysLoginLogServiceImpl implements SysLoginLogService {
 
@@ -28,6 +30,8 @@ public class SysLoginLogServiceImpl implements SysLoginLogService {
         if(!Objects.isEmpty(sysLoginLog.getId())){
             count = mapper.updateByPrimaryKeySelective(sysLoginLog);
         }else{
+            //设置创建时间时间
+            sysLoginLog.setCreateDate(new Date());
             count = mapper.insertSelective(sysLoginLog);
         }
         return count;
