@@ -6,4 +6,6 @@ import tk.mybatis.mapper.common.Mapper;
 public interface SysUserMapper extends Mapper<SysUser> {
 
     SysUser findUserByAccountName(String accountName);
+
+    int deleteByIds(Long[] ids);
 }

@@ -41,6 +41,49 @@
     <result column="updater_id" jdbcType="BIGINT" property="updaterId" />
     <result column="branch_company_id" jdbcType="BIGINT" property="branchCompanyId" />
   </resultMap>
+
+  <!-- 查询用户权限 -->
+  <resultMap type="com.gqgx.common.entity.SysUser" id="roleUserMap">
+    <id column="A_id" property="id" jdbcType="BIGINT" />
+    <result column="A_account_name" property="accountName" jdbcType="VARCHAR" />
+    <result column="A_pass_word" property="passWord" jdbcType="VARCHAR" />
+    <result column="A_name" property="name" jdbcType="VARCHAR" />
+    <result column="A_code" property="code" jdbcType="VARCHAR" />
+    <result column="data_power" property="dataPower" jdbcType="VARCHAR" />
+    <result column="A_company_abb" property="companyAbb" jdbcType="VARCHAR" />
+    <result column="A_company_address" property="companyAddress" jdbcType="VARCHAR" />
+    <result column="A_company_url" property="companyUrl" jdbcType="VARCHAR" />
+    <result column="A_company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="A_phone" property="phone" jdbcType="VARCHAR" />
+    <result column="A_email" property="email" jdbcType="VARCHAR" />
+    <result column="A_company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="A_user_status" property="userStatus" jdbcType="CHAR" />
+    <result column="A_company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="A_department_id" property="departmentId" jdbcType="BIGINT" />
+    <collection property="sysMenus" ofType="com.gqgx.common.entity.SysMenu">
+      <id column="d_id" property="id" jdbcType="BIGINT" />
+      <result column="d_parent_id" property="parentId" jdbcType="BIGINT" />
+      <result column="d_name" property="name" jdbcType="VARCHAR" />
+      <result column="d_menu_icon" property="menuIcon" jdbcType="VARCHAR" />
+      <result column="d_code" property="code" jdbcType="VARCHAR" />
+      <result column="d_desc" property="descption" jdbcType="VARCHAR" />
+      <result column="d_url" property="url" jdbcType="VARCHAR" />
+      <result column="d_sort" property="sort" jdbcType="SMALLINT" />
+      <result column="d_company_id" property="companyId" jdbcType="BIGINT" />
+    </collection>
+    <collection property="menuOperations" ofType="com.gqgx.common.entity.SysMenuOperation">
+      <id column="f_id" property="id" jdbcType="BIGINT" />
+      <result column="f_menu_id" property="menuId" jdbcType="BIGINT" />
+      <result column="f_parent_id" property="parentId" jdbcType="BIGINT" />
+      <result column="f_name" property="name" jdbcType="VARCHAR" />
+      <result column="f_code" property="code" jdbcType="VARCHAR" />
+      <result column="f_url" property="url" jdbcType="VARCHAR" />
+      <result column="f_sort" property="sort" jdbcType="INTEGER" />
+      <result column="f_remark" property="remark" jdbcType="VARCHAR" />
+      <result column="f_company_id" property="companyId" jdbcType="BIGINT" />
+    </collection>
+  </resultMap>
+
   <!--根据主键id批量删除-->
   <delete id="deleteByIds">
     delete from sys_user where id in
@@ -49,12 +92,63 @@
     </foreach>
   </delete>
 
-  <select id="findUserByAccountName" resultMap="BaseResultMap">
-     SELECT
-     id,account_name,pass_word,NAME,CODE,sex,birthday,entry_date,
-     department_id,photo_id,phone,email,telephone,contacts,contacts_phone,address,school,major,graduation,
-     education,origin,race,marriage,political,remark,user_status,user_type,company_id,record_status,update_count,
-     create_date,creator_id,update_date,updater_id,branch_company_id
-      FROM sys_user  WHERE  account_name = #{accountName}
+  <!--<select id="findUserByAccountName" resultMap="BaseResultMap">-->
+     <!--SELECT-->
+     <!--id,account_name,pass_word,NAME,CODE,sex,birthday,entry_date,-->
+     <!--department_id,photo_id,phone,email,telephone,contacts,contacts_phone,address,school,major,graduation,-->
+     <!--education,origin,race,marriage,political,remark,user_status,user_type,company_id,record_status,update_count,-->
+     <!--create_date,creator_id,update_date,updater_id,branch_company_id-->
+      <!--FROM sys_user  WHERE  account_name = #{accountName}-->
+  <!--</select>-->
+
+  <!--查询用户权限-->
+  <select id="findUserByAccountName" parameterType="map" resultMap="roleUserMap">
+    SELECT
+    A.id AS A_id,
+    A.account_name AS A_account_name,
+    A.pass_word AS A_pass_word,
+    A.NAME AS A_name,
+    A.CODE AS A_code,
+    A.user_status AS A_user_status,
+    A.company_id AS A_company_id,
+    A.department_id AS A_department_id,
+    A.phone as A_phone,
+    A.email as A_email,
+    d.id AS d_id,
+    d.parent_id AS d_parent_id,
+    d.NAME AS d_name,
+    d.CODE AS d_code,
+    d.descption AS d_desc,
+    d.url AS d_url,
+    d.sort AS d_sort,
+    d.company_id AS d_company_id,
+    d.menu_icon as d_menu_icon,
+    f.id AS f_id,
+    f.menu_id AS f_menu_id,
+    f.parent_id AS f_parent_id,
+    CONCAT(d.NAME, '-', f.NAME) AS f_name,
+    f.CODE AS f_code,
+    f.url AS f_url,
+    f.sort AS f_sort,
+    f.remark AS f_remark,
+    (
+    select
+    max(sp.data_power)
+    from sys_user_position sup
+    inner join sys_position sp on sp.id=sup.position_id and sp.record_status='A'
+    where sup.record_status='A' and sup.user_id=a.id
+    )data_power
+    FROM
+    sys_user a
+    LEFT JOIN sys_user_position b ON a.id = b.user_id AND b.record_status = 'A'
+    LEFT JOIN sys_position_menu c ON c.position_id = b.position_id AND c.record_status = 'A'
+    LEFT JOIN sys_menu d ON d.id = c.menu_id AND d.record_status = 'A'
+    LEFT JOIN sys_position_operation e ON b.position_id = e.position_id and d.id=e.menu_id AND e.record_status = 'A'
+    LEFT JOIN sys_menu_operation f ON e.menu_operation_id=f.id AND f.record_status='A'
+    WHERE
+    a.record_status = 'A'
+    and a.account_name = #{accountName}
+    ORDER BY d.sort ASC,f.sort ASC
   </select>
+
 </mapper>

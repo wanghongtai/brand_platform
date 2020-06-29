@@ -401,4 +401,27 @@ public class SysMenu {
     public void setUpdaterId(Long updaterId) {
         this.updaterId = updaterId;
     }
+
+    @Override
+    public String toString() {
+        return "SysMenu{" +
+                "id=" + id +
+                ", parentId=" + parentId +
+                ", name='" + name + '\'' +
+                ", code='" + code + '\'' +
+                ", descption='" + descption + '\'' +
+                ", url='" + url + '\'' +
+                ", sort=" + sort +
+                ", menuIcon='" + menuIcon + '\'' +
+                ", companyId=" + companyId +
+                ", ishasCityPermission='" + ishasCityPermission + '\'' +
+                ", ishasDataPermission='" + ishasDataPermission + '\'' +
+                ", recordStatus='" + recordStatus + '\'' +
+                ", updateCount=" + updateCount +
+                ", createDate=" + createDate +
+                ", creatorId=" + creatorId +
+                ", updateDate=" + updateDate +
+                ", updaterId=" + updaterId +
+                '}';
+    }
 }

@@ -30,6 +30,7 @@ public class SysMenu {
     /**
      * 菜单描述
      */
+    @Column(name = "desc")
     private String descption;
 
     /**

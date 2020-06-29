@@ -35,6 +35,8 @@ public class BrandLargeTypeServiceImpl implements BrandLargeTypeService {
         }else{
             //insert方法是使用所有的属性作为字段使用,如INSERT INTO tb_user (AGE,USER_NAME,ID,NAME,BIRTHDAY,SEX,PASSWORD,UPDATED,CREATED) VALUES ( ?,?,?,?,?,?,?,?,? )，Parameters: null, null, null, sansan(String), null, null, null, null, null
             //insertSelective插入数据，使用不为null的属性作为字段使用，如 INSERT INTO tb_user ( ID,NAME ) VALUES ( ?,? )，Parameters: null, test_insertSelective(String)
+            //TODO: 默认值
+            brandLargeType.setRecordStatus(RecordStatus.ACTIVE);
             count = mapper.insertSelective(brandLargeType);
         }
         return count;

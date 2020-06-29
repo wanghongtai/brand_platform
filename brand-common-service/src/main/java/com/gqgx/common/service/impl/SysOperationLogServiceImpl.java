@@ -12,6 +12,7 @@ import com.gqgx.common.service.SysOperationLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Date;
 import java.util.List;
 
 @org.springframework.stereotype.Service
@@ -33,6 +34,8 @@ public class SysOperationLogServiceImpl implements SysOperationLogService {
         if(!Objects.isEmpty(sysOperationLog.getId())){
             count = mapper.updateByPrimaryKeySelective(sysOperationLog);
         }else{
+            //添加操作记录，设置创建时间
+            sysOperationLog.setCreateDate(new Date());
             count = mapper.insertSelective(sysOperationLog);
         }
         return count;

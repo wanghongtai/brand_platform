@@ -14,46 +14,48 @@ public class SysUser {
      */
     private static final long serialVersionUID = -279125948122252876L;
 
+    //在实体类数据库没有的属性上加上@Transient注解，表示该属性不是表中的列
+    @Transient
     private String oldPassWord;
-
+    @Transient
     private String departmentName;//部门名称
-
+    @Transient
     private String positionName;//职位名称
-
+    @Transient
     private String companyName; //公司名称
-
+    @Transient
     private String areaName;//工作地点
-
+    @Transient
     private Long positionId;//职位id
-
+    @Transient
     private String birthdayStr;
-
+    @Transient
     private String entryDateStr;
-
+    @Transient
     private List<SysUserPosition> userPositions;//员工职位
-
+    @Transient
     private String dataPower; //数据权限
-
+    @Transient
     private List<SysMenu> sysMenus;
-
+    @Transient
     private List<SysMenuOperation> menuOperations;
-
+    @Transient
     private List<Long> deparmentIds;
-
+    @Transient
     private Long defaultMenuId;
-
+    @Transient
     private String defaultMenuName;
-
+    @Transient
     private String defaultUrl;
-
+    @Transient
     private String companyAbb;
-
+    @Transient
     private String accountPrefix;
-
+    @Transient
     private String companyAddress;
-
+    @Transient
     private String companyUrl;
-
+    @Transient
     private String joinTable;
 
    /*************************************** 追加字段结束**************************************/
