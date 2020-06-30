@@ -307,12 +307,15 @@
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
                 <!--<excludes>-->
-                    <!--<exclude>*.xml</exclude>-->
-                    <!--<exclude>*.properties</exclude>-->
+                <!--<exclude>*.xml</exclude>-->
+                <!--<exclude>*.properties</exclude>-->
                 <!--</excludes>-->
                 <!--打包brand-common-service只包含mapper下的资源文件-->
+                <!--<includes>-->
+                <!--<include>mapper/*.xml</include>-->
+                <!--</includes>-->
                 <includes>
-                    <include>mapper/*.xml</include>
+                    <include>**/*</include>
                 </includes>
             </resource>
         </resources>

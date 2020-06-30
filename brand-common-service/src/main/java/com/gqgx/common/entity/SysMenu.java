@@ -1,10 +1,27 @@
 package com.gqgx.common.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Table(name = "sys_menu")
-public class SysMenu {
+public class SysMenu implements Serializable{
+
+    /*****************************新加字段开始************/
+    private static final long serialVersionUID = -8274565012253042731L;
+
+    @Transient
+    private List<ChildSysMenu> childs;
+
+    /**
+     * 是否选中
+     */
+    @Transient
+    private String isCheck;
+
+    /**************************新加字段结束*****************/
+
     /**
      * 表主键
      */
@@ -402,10 +419,27 @@ public class SysMenu {
         this.updaterId = updaterId;
     }
 
+    public List<ChildSysMenu> getChilds() {
+        return childs;
+    }
+
+    public void setChilds(List<ChildSysMenu> childs) {
+        this.childs = childs;
+    }
+
+    public String getIsCheck() {
+        return isCheck;
+    }
+
+    public void setIsCheck(String isCheck) {
+        this.isCheck = isCheck;
+    }
+
     @Override
     public String toString() {
         return "SysMenu{" +
-                "id=" + id +
+                "childs=" + childs +
+                ", id=" + id +
                 ", parentId=" + parentId +
                 ", name='" + name + '\'' +
                 ", code='" + code + '\'' +

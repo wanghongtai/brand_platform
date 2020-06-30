@@ -18,6 +18,7 @@ import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.weekend.Weekend;
 import tk.mybatis.mapper.weekend.WeekendCriteria;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -38,6 +39,9 @@ public class BrandDycTypeItemServiceImpl implements BrandDycTypeItemService {
 		if(!Objects.isEmpty(item.getId())){
 			count = mapper.updateByPrimaryKeySelective(item);
 		}else{
+			item.setRecordStatus(RecordStatus.ACTIVE);
+			item.setUpdateCount(0);
+			item.setCreateDate(new Date());
 			count = mapper.insertSelective(item);
 		}
 		return count;
@@ -63,13 +67,13 @@ public class BrandDycTypeItemServiceImpl implements BrandDycTypeItemService {
 		Example example = new Example(BrandLargeType.class);
 
 		example.setOrderByClause("create_date DESC");
-		example.createCriteria().andEqualTo("record_status", RecordStatus.ACTIVE);
+		example.createCriteria().andEqualTo("recordStatus", RecordStatus.ACTIVE);
 
 		if(!Objects.isEmpty(item.getProjectName())) {
-			example.createCriteria().andEqualTo("project_name", item.getProjectName().trim());
+			example.createCriteria().andEqualTo("projectName", item.getProjectName().trim());
 		}
 		if(!Objects.isEmpty(item.getNavItemId())) {
-			example.createCriteria().andEqualTo("nav_item_id", item.getNavItemId());
+			example.createCriteria().andEqualTo("navItemId", item.getNavItemId());
 		}
 		if (page != null) {
 			PageHelper.startPage(page.getPage(), page.getLimit());
@@ -86,13 +90,13 @@ public class BrandDycTypeItemServiceImpl implements BrandDycTypeItemService {
 		Example.Criteria criteria = example.createCriteria();
 
 		example.setOrderByClause("create_date DESC");
-		criteria.andEqualTo("record_status", RecordStatus.ACTIVE);
+		criteria.andEqualTo("recordStatus", RecordStatus.ACTIVE);
 
 		if(!Objects.isEmpty(item.getProjectName())) {
-			criteria.andEqualTo("project_name", item.getProjectName().trim());
+			example.createCriteria().andLike("projectName", "%"+item.getProjectName().trim()+"%");
 		}
 		if(!Objects.isEmpty(item.getNavItemId())) {
-			criteria.andEqualTo("nav_item_id", item.getNavItemId());
+			criteria.andEqualTo("navItemId", item.getNavItemId());
 		}
 
 		//复杂 or条件查询

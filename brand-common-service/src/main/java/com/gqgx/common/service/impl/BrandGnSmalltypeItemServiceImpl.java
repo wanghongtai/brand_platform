@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.gqgx.common.criteria.Criteria;
 import com.gqgx.common.entity.BrandGnSmalltypeItem;
 import com.gqgx.common.entity.BrandLargeType;
+import com.gqgx.common.entity.RecordStatus;
 import com.gqgx.common.entity.vo.BrandGnSmalltypeItemVo;
 import com.gqgx.common.lang.Objects;
 import com.gqgx.common.mapper.BrandGnSmalltypeItemMapper;
@@ -13,6 +14,7 @@ import com.gqgx.common.service.BrandGnSmalltypeItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Date;
 import java.util.List;
 
 @org.springframework.stereotype.Service
@@ -35,6 +37,9 @@ public class BrandGnSmalltypeItemServiceImpl implements BrandGnSmalltypeItemServ
         if(!Objects.isEmpty(brandGnSmalltypeItem.getId())){
             count = mapper.updateByPrimaryKeySelective(brandGnSmalltypeItem);
         }else{
+            brandGnSmalltypeItem.setRecordStatus(RecordStatus.ACTIVE);
+            brandGnSmalltypeItem.setUpdateCount(0);
+            brandGnSmalltypeItem.setCreateDate(new Date());
             count = mapper.insertSelective(brandGnSmalltypeItem);
         }
         return count;
@@ -62,8 +67,8 @@ public class BrandGnSmalltypeItemServiceImpl implements BrandGnSmalltypeItemServ
         Example example = new Example(BrandLargeType.class);
         example.setOrderByClause("create_date DESC");
 
-        if(!Objects.isEmpty(item.getSmallTypeId())) {
-            example.createCriteria().andLike("project_name", item.getSmallTypeId().toString());
+        if(!Objects.isEmpty(item.getProjectCnname())) {
+            example.createCriteria().andLike("projectName", "%"+item.getProjectCnname().trim()+"%");
         }
         if (page != null) {
             PageHelper.startPage(page.getPage(), page.getLimit());

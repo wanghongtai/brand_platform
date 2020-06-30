@@ -14,6 +14,7 @@ import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.weekend.Weekend;
 import tk.mybatis.mapper.weekend.WeekendCriteria;
 
+import java.util.Date;
 import java.util.List;
 
 @org.springframework.stereotype.Service
@@ -34,6 +35,9 @@ public class BrandJpTypeItemServiceImpl implements BrandJpTypeItemService {
         if(!Objects.isEmpty(brandJpTypeItem.getId())){
             count = mapper.updateByPrimaryKeySelective(brandJpTypeItem);
         }else{
+            brandJpTypeItem.setRecordStatus(RecordStatus.ACTIVE);
+            brandJpTypeItem.setUpdateCount(0);
+            brandJpTypeItem.setCreateDate(new Date());
             count = mapper.insertSelective(brandJpTypeItem);
         }
         return count;
@@ -61,7 +65,7 @@ public class BrandJpTypeItemServiceImpl implements BrandJpTypeItemService {
         example.setOrderByClause("create_date DESC");
 
         if(!Objects.isEmpty(item.getProjectName())) {
-            example.createCriteria().andLike("projectName", item.getProjectName().trim());
+            example.createCriteria().andLike("projectName", "%"+item.getProjectName().trim()+"%");
         }
         if (page != null) {
             PageHelper.startPage(page.getPage(), page.getLimit());

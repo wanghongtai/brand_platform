@@ -1,6 +1,7 @@
 package com.gqgx.common.service.impl;
 
 import com.gqgx.common.criteria.Criteria;
+import com.gqgx.common.entity.RecordStatus;
 import com.gqgx.common.entity.SysMenu;
 import com.gqgx.common.entity.SysMenuTreeVO;
 import com.gqgx.common.entity.vo.NodeTreeVo;
@@ -11,6 +12,7 @@ import com.gqgx.common.paging.PagingResult;
 import com.gqgx.common.service.SysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.List;
 
 @org.springframework.stereotype.Service
@@ -32,6 +34,9 @@ public class SysMenuServiceImpl implements SysMenuService {
         if(!Objects.isEmpty(sysMenu.getId())){
             count = mapper.updateByPrimaryKeySelective(sysMenu);
         }else{
+            sysMenu.setRecordStatus(RecordStatus.ACTIVE);
+            sysMenu.setUpdateCount(0);
+            sysMenu.setCreateDate(new Date());
             count = mapper.insertSelective(sysMenu);
         }
         return count;
@@ -101,6 +106,6 @@ public class SysMenuServiceImpl implements SysMenuService {
 
     @Override
     public List<SysMenu> menuLPowerist(Long positionId) {
-        return null;
+        return mapper.menuPowerList(positionId);
     }
 }

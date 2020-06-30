@@ -23,6 +23,53 @@
     <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
     <result column="updater_id" jdbcType="BIGINT" property="updaterId" />
   </resultMap>
+
+  <resultMap id="menuPowerListMapVo" type="com.gqgx.common.entity.SysMenu" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="menu_check1" property="isCheck" jdbcType="VARCHAR" />
+    <collection property="childs" ofType="com.gqgx.common.entity.ChildSysMenu">
+      <id column="item_id" property="id" jdbcType="BIGINT" />
+      <result column="item_name" property="name" jdbcType="VARCHAR" />
+      <result column="menu_check2" property="isCheck" jdbcType="VARCHAR" />
+      <collection property="operations" ofType="com.gqgx.common.entity.SysMenuOperation">
+        <id column="option_id" property="id" jdbcType="BIGINT" />
+        <result column="option_name" property="name" jdbcType="VARCHAR" />
+        <result column="menu_check3" property="isCheck" jdbcType="VARCHAR" />
+      </collection>
+    </collection>
+  </resultMap>
+
+  <!--根据用户id获取菜单列表-->
+  <select id="menuPowerList" resultMap="menuPowerListMapVo" parameterType="java.lang.Long">
+    SELECT
+    par.id,
+    par.NAME,
+    child.id item_id,
+    child.NAME item_name,
+    smo.id option_id,
+    smo.NAME option_name,
+    IF(pmenu1.id,'check','') menu_check1,
+    IF(pmenu2.id,'check','') menu_check2,
+    IF(pon.id,'check','') menu_check3
+    FROM
+    sys_menu par
+    LEFT JOIN sys_position_menu pmenu1 on pmenu1.menu_id = par.id and pmenu1.record_status = 'A'
+    and pmenu1.position_id = #{positionId}
+    LEFT JOIN sys_menu child ON par.id = child.parent_id AND child.record_status = 'A'
+    LEFT JOIN sys_position_menu pmenu2 on pmenu2.menu_id = child.id and pmenu2.record_status = 'A'
+    and pmenu2.position_id = #{positionId}
+    LEFT JOIN sys_menu_operation smo ON smo.menu_id = child.id AND smo.record_status = 'A'
+    LEFT JOIN sys_position_operation pon on pon.menu_operation_id = smo.id and pon.record_status = 'A'
+    and pon.position_id = #{positionId}
+    WHERE
+    par.parent_id IS NULL AND par.record_status = 'A'
+    ORDER BY
+    par.sort,
+    child.sort,
+    smo.sort
+  </select>
+
   <!--根据主键id批量删除-->
   <delete id="deleteByIds">
     delete from sys_menu where id in

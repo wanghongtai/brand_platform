@@ -62,7 +62,7 @@ public class BrandLargeTypeServiceImplTest {
         brandLargeTypeService.saveBrandLargeType(brandLargeType);
 
         System.out.println(brandLargeType);
-        brandLargeTypeService.deleteBrandLargeType(brandLargeType);
+        //brandLargeTypeService.deleteBrandLargeType(brandLargeType);
     }
 
     @Test

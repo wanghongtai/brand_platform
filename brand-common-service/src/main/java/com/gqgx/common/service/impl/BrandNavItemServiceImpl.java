@@ -13,6 +13,7 @@ import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.weekend.Weekend;
 import tk.mybatis.mapper.weekend.WeekendCriteria;
 
+import java.util.Date;
 import java.util.List;
 
 @org.springframework.stereotype.Service
@@ -35,6 +36,9 @@ public class BrandNavItemServiceImpl implements BrandNavItemService {
 		if(!Objects.isEmpty(brandNavItem.getId())){
 			count = mapper.updateByPrimaryKeySelective(brandNavItem);
 		}else{
+			brandNavItem.setRecordStatus(RecordStatus.ACTIVE);
+			brandNavItem.setUpdateCount(0);
+			brandNavItem.setCreateDate(new Date());
 			count = mapper.insertSelective(brandNavItem);
 		}
 		return count;
@@ -61,10 +65,9 @@ public class BrandNavItemServiceImpl implements BrandNavItemService {
 		Example example = new Example(BrandNavItem.class);
 		example.setOrderByClause("create_date DESC");
 
-		if(!Objects.isEmpty(item.getCityName())){
-			example.createCriteria().andLike("city_name", item.getCityName().trim());
+		if(!Objects.isEmpty(item.getName())){
+			example.createCriteria().andLike("name", item.getName().trim());
 		}
-
 		List<BrandNavItem> list = mapper.selectByExample(example);
 
 //		PagingResult<BrandNavItem> pageResult = new PagingResult<>(list);
@@ -78,8 +81,8 @@ public class BrandNavItemServiceImpl implements BrandNavItemService {
 
 		criteria.andEqualTo("record_status", RecordStatus.ACTIVE);
 		example.setOrderByClause("city_name  ASC");
-		if(!Objects.isEmpty(item.getId())) {
-			example.createCriteria().andEqualTo("large_type_id", item.getId());
+		if(!Objects.isEmpty(item.getName())) {
+			example.createCriteria().andLike("name", "%"+item.getName().trim()+"%");
 		}
 
 		//复杂 or条件查询

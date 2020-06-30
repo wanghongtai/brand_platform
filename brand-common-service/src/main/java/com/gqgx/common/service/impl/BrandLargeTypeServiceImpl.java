@@ -12,6 +12,7 @@ import com.gqgx.common.service.BrandLargeTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Date;
 import java.util.List;
 
 @org.springframework.stereotype.Service
@@ -37,6 +38,8 @@ public class BrandLargeTypeServiceImpl implements BrandLargeTypeService {
             //insertSelective插入数据，使用不为null的属性作为字段使用，如 INSERT INTO tb_user ( ID,NAME ) VALUES ( ?,? )，Parameters: null, test_insertSelective(String)
             //TODO: 默认值
             brandLargeType.setRecordStatus(RecordStatus.ACTIVE);
+            brandLargeType.setUpdateCount(0);
+            brandLargeType.setCreateDate(new Date());
             count = mapper.insertSelective(brandLargeType);
         }
         return count;
@@ -66,9 +69,7 @@ public class BrandLargeTypeServiceImpl implements BrandLargeTypeService {
             example.createCriteria().andEqualTo("name", type.getName().trim());
         }
         example.createCriteria().andEqualTo("recordStatus", RecordStatus.ACTIVE);
-
         example.setOrderByClause("catalog ASC");
-        List<BrandLargeType> brandLargeTypeList = mapper.selectByExample(example);
 
         if (page != null) {
             PageHelper.startPage(page.getPage(), page.getLimit());

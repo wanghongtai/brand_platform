@@ -15,6 +15,7 @@ import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.weekend.Weekend;
 import tk.mybatis.mapper.weekend.WeekendCriteria;
 
+import java.util.Date;
 import java.util.List;
 
 @org.springframework.stereotype.Service
@@ -36,6 +37,9 @@ public class BrandAuTypeItemServiceImpl implements BrandAuTypeItemService {
             count = brandAuTypeItemDAO.updateByPrimaryKeySelective(item);
         }else{
             //insertSelective插入数据，使用不为null的属性作为字段使用，如 INSERT INTO tb_user ( ID,NAME ) VALUES ( ?,? )，Parameters: null, test_insertSelective(String)
+            item.setRecordStatus(RecordStatus.ACTIVE);
+            item.setUpdateCount(0);
+            item.setCreateDate(new Date());
             count = brandAuTypeItemDAO.insertSelective(item);
         }
         return count;
@@ -63,7 +67,7 @@ public class BrandAuTypeItemServiceImpl implements BrandAuTypeItemService {
 
         example.setOrderByClause("create_date DESC");
         if(!Objects.isEmpty(type.getProjectName())) {
-            example.createCriteria().andEqualTo("project_name", type.getProjectName().trim());
+            example.createCriteria().andLike("projectName", "%"+type.getProjectName().trim()+"%");
         }
         if (page != null) {
             PageHelper.startPage(page.getPage(), page.getLimit());

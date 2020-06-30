@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.gqgx.common.criteria.Criteria;
 import com.gqgx.common.entity.BrandLargeType;
 import com.gqgx.common.entity.BrandSmallType;
+import com.gqgx.common.entity.RecordStatus;
 import com.gqgx.common.lang.Objects;
 import com.gqgx.common.mapper.BrandSmallTypeMapper;
 import com.gqgx.common.paging.LayuiPage;
@@ -12,6 +13,7 @@ import com.gqgx.common.service.BrandSmallTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Date;
 import java.util.List;
 
 @org.springframework.stereotype.Service
@@ -38,6 +40,9 @@ public class BrandSmallTypeServiceImpl implements BrandSmallTypeService {
 		if(!Objects.isEmpty(brandSmallType.getId())){
 			count = mapper.updateByPrimaryKeySelective(brandSmallType);
 		}else{
+			brandSmallType.setRecordStatus(RecordStatus.ACTIVE);
+			brandSmallType.setUpdateCount(0);
+			brandSmallType.setCreateDate(new Date());
 			count = mapper.insertSelective(brandSmallType);
 		}
 		return count;
@@ -63,10 +68,10 @@ public class BrandSmallTypeServiceImpl implements BrandSmallTypeService {
 	@Override
 	public PagingResult<BrandSmallType> findBrandSmallType(BrandSmallType brandSmallType, LayuiPage page) {
 		Example example = new Example(BrandLargeType.class);
-		example.setOrderByClause("large_type_id DESC");
+		example.setOrderByClause("create_date DESC");
 
-		if(!Objects.isEmpty(brandSmallType.getLargeTypeId())) {
-			example.createCriteria().andLike("large_type_id", brandSmallType.getLargeTypeId().toString());
+		if(!Objects.isEmpty(brandSmallType.getName())) {
+			example.createCriteria().andLike("name", "%"+brandSmallType.getName()+"%");
 		}
 		if (page != null) {
 			PageHelper.startPage(page.getPage(), page.getLimit());
@@ -79,6 +84,13 @@ public class BrandSmallTypeServiceImpl implements BrandSmallTypeService {
 
 	@Override
 	public List<BrandSmallType> findBrandSmallTypeList(BrandSmallType brandSmallType) {
-		return null;
+		Example example = new Example(BrandLargeType.class);
+		example.setOrderByClause("create_date DESC");
+
+		if(!Objects.isEmpty(brandSmallType) && !Objects.isEmpty(brandSmallType.getNo())) {
+			example.createCriteria().andEqualTo("no", brandSmallType.getNo());
+		}
+		List<BrandSmallType> list = mapper.selectByExample(example);
+		return list;
 	}
 }

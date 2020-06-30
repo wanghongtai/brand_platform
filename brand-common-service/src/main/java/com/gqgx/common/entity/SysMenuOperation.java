@@ -2,9 +2,22 @@ package com.gqgx.common.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Table(name = "sys_menu_operation")
 public class SysMenuOperation {
+
+
+
+    /*****************************新加字段开始************/
+    /**
+     * 是否选中
+     */
+    @Transient
+    private String isCheck;
+
+    /**************************新加字段结束*****************/
+
     /**
      * 表主键
      */
@@ -359,5 +372,13 @@ public class SysMenuOperation {
      */
     public void setUpdaterId(Long updaterId) {
         this.updaterId = updaterId;
+    }
+
+    public String getIsCheck() {
+        return isCheck;
+    }
+
+    public void setIsCheck(String isCheck) {
+        this.isCheck = isCheck;
     }
 }
