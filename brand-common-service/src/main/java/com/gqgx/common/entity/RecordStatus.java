@@ -8,4 +8,5 @@ public class RecordStatus {
 
     public static final String ACTIVE = "A";
     public static final String INACTIVE = "I";
+    public static final String LOCKED = "L";
 }

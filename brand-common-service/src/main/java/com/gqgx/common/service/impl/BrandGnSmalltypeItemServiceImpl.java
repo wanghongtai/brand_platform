@@ -64,11 +64,11 @@ public class BrandGnSmalltypeItemServiceImpl implements BrandGnSmalltypeItemServ
 
     @Override
     public PagingResult<BrandGnSmalltypeItem> findBrandGnSmalltypeItem(BrandGnSmalltypeItem item, LayuiPage page) {
-        Example example = new Example(BrandLargeType.class);
+        Example example = new Example(BrandGnSmalltypeItem.class);
         example.setOrderByClause("create_date DESC");
 
         if(!Objects.isEmpty(item.getProjectCnname())) {
-            example.createCriteria().andLike("projectName", "%"+item.getProjectCnname().trim()+"%");
+            example.createCriteria().andLike("projectCnname", "%"+item.getProjectCnname().trim()+"%");
         }
         if (page != null) {
             PageHelper.startPage(page.getPage(), page.getLimit());
