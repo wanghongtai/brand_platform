@@ -2,7 +2,8 @@ package com.gqgx.common.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.gqgx.common.criteria.Criteria;
-import com.gqgx.common.entity.*;
+import com.gqgx.common.entity.BrandNavItem;
+import com.gqgx.common.entity.RecordStatus;
 import com.gqgx.common.lang.Objects;
 import com.gqgx.common.mapper.BrandNavItemMapper;
 import com.gqgx.common.paging.LayuiPage;
@@ -76,18 +77,18 @@ public class BrandNavItemServiceImpl implements BrandNavItemService {
 
 	@Override
 	public PagingResult<BrandNavItem> findBrandNavItem(BrandNavItem item, LayuiPage page) {
-		Example example = new Example(BrandLargeType.class);
+		Example example = new Example(BrandNavItem.class);
 		Example.Criteria criteria = example.createCriteria();
 
-		criteria.andEqualTo("record_status", RecordStatus.ACTIVE);
+		criteria.andEqualTo("recordStatus", RecordStatus.ACTIVE);
 		example.setOrderByClause("city_name  ASC");
 		if(!Objects.isEmpty(item.getName())) {
 			example.createCriteria().andLike("name", "%"+item.getName().trim()+"%");
 		}
 
 		//复杂 or条件查询
-		Weekend<BrandGnSmalltypeItem> weekend = new Weekend<>(BrandGnSmalltypeItem.class);
-		WeekendCriteria<BrandGnSmalltypeItem, Object> keywordCriteria = weekend.weekendCriteria();
+		Weekend<BrandNavItem> weekend = new Weekend<>(BrandNavItem.class);
+		WeekendCriteria<BrandNavItem, Object> keywordCriteria = weekend.weekendCriteria();
 		if (!Objects.isEmpty(item.getId())) {
 			keywordCriteria.orLike("name", "%" + item.getName().trim() + "%")
 					.orLike("cityName", "%" + item.getCityName().trim() + "%");

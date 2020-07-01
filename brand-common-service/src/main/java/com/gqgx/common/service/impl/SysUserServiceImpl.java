@@ -46,6 +46,8 @@ public class SysUserServiceImpl implements SysUserService {
             count = mapper.updateByPrimaryKeySelective(sysUser);
         } else {
             //添加操作记录，设置创建时间
+            sysUser.setRecordStatus(RecordStatus.ACTIVE);
+            sysUser.setUpdateCount(0);
             sysUser.setCreateDate(new Date());
             count = mapper.insertSelective(sysUser);
         }
