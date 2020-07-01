@@ -20,6 +20,21 @@
     <result column="data_power" jdbcType="CHAR" property="dataPower" />
   </resultMap>
 
+  <resultMap id="BaseResultMapVo" type="com.gqgx.common.entity.vo.SysPositionVo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="supId" property="supId" jdbcType="BIGINT" />
+  </resultMap>
+
+  <!--根据用户id获取职位列表-->
+  <select id="findPositionList" parameterType="java.lang.Long" resultMap="BaseResultMapVo" >
+    select
+    sp.id,sp.name ,sup.id supId
+    from sys_position sp
+    left join sys_user_position  sup on sp.id=sup.position_id and sup.record_status='A' and sup.user_id=#{userId}
+    where sp.record_status='A' order by sp.create_date
+  </select>
+
   <select id="findPositionByParams" parameterType="map" resultMap="BaseResultMap" >
     SELECT
     t.id,

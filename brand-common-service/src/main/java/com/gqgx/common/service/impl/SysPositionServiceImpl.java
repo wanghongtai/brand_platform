@@ -34,9 +34,9 @@ public class SysPositionServiceImpl implements SysPositionService {
     @Override
     public int saveSysPosition(SysPosition sysPosition) {
         int count = 0;
-        if(!Objects.isEmpty(sysPosition.getId())){
+        if (!Objects.isEmpty(sysPosition.getId())) {
             count = mapper.updateByPrimaryKeySelective(sysPosition);
-        }else{
+        } else {
             sysPosition.setRecordStatus(RecordStatus.ACTIVE);
             sysPosition.setUpdateCount(0);
             sysPosition.setCreateDate(new Date());
@@ -77,7 +77,12 @@ public class SysPositionServiceImpl implements SysPositionService {
 
     @Override
     public List<SysPosition> findBySysPosition(SysPosition sysPosition) {
-        return null;
+        Example example = new Example(SysPosition.class);
+        Example.Criteria cb = example.createCriteria();
+        if (!Objects.isEmpty(sysPosition) && sysPosition.getDepartmentId() != null) {
+            cb.andEqualTo("departmentId", sysPosition.getDepartmentId());
+        }
+        return mapper.selectByExample(example);
     }
 
     @Override
@@ -97,7 +102,7 @@ public class SysPositionServiceImpl implements SysPositionService {
 
     @Override
     public List<SysPositionVo> findPositionList(Long userId) {
-        return null;
+        return mapper.findPositionList(userId);
     }
 
     @Override
@@ -108,11 +113,11 @@ public class SysPositionServiceImpl implements SysPositionService {
 
 
         Map<String, Object> params = new HashMap<>();
-        if(!Objects.isEmpty(item.getName())) {
+        if (!Objects.isEmpty(item.getName())) {
             params.put("name", item.getName());
         }
         //连表查询
-        if(!Objects.isEmpty(item.getSysMenuId())) {
+        if (!Objects.isEmpty(item.getSysMenuId())) {
             params.put("sysMenuId", item.getSysMenuId());
         }
         if (page != null) {

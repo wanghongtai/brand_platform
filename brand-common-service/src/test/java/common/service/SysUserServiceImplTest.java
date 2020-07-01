@@ -1,6 +1,9 @@
 package common.service;
 
+import com.gqgx.common.entity.SysMenu;
 import com.gqgx.common.entity.SysUser;
+import com.gqgx.common.paging.LayuiPage;
+import com.gqgx.common.paging.PagingResult;
 import com.gqgx.common.service.SysUserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,5 +27,27 @@ public class SysUserServiceImplTest {
         System.out.println(admin);
 
         System.out.println(admin.getSysMenus());
+    }
+
+    @Test
+    public void test2() throws Exception {
+        SysUser sysUser = new SysUser();
+        sysUser.setName("管理员");
+        LayuiPage page = new LayuiPage();
+
+        PagingResult<SysUser> result = sysUserService.userList(sysUser, page);
+        System.out.println("总条数：" + result.getTotal());
+        for (SysUser item : result.getList()) {
+            System.out.println(item);
+        }
+    }
+
+    @Test
+    public void test3() throws Exception {
+        PagingResult<SysUser> result = sysUserService.userList(null, null);
+        System.out.println("总条数：" + result.getTotal());
+        for (SysUser item : result.getList()) {
+            System.out.println(item);
+        }
     }
 }

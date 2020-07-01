@@ -2,10 +2,7 @@ package com.gqgx.common.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.gqgx.common.criteria.Criteria;
-import com.gqgx.common.entity.RecordStatus;
-import com.gqgx.common.entity.SysMenuOperation;
-import com.gqgx.common.entity.SysUser;
-import com.gqgx.common.entity.SysUserPosition;
+import com.gqgx.common.entity.*;
 import com.gqgx.common.lang.Objects;
 import com.gqgx.common.lang.Strings;
 import com.gqgx.common.mapper.SysUserMapper;
@@ -16,7 +13,10 @@ import com.gqgx.common.service.SysPositionService;
 import com.gqgx.common.service.SysUserPositionService;
 import com.gqgx.common.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.weekend.Weekend;
+import tk.mybatis.mapper.weekend.WeekendCriteria;
 
 import java.util.Date;
 import java.util.List;
@@ -136,6 +136,8 @@ public class SysUserServiceImpl implements SysUserService {
             count = mapper.updateByPrimaryKeySelective(sysUser);
         } else {
             //添加操作记录，设置创建时间
+            sysUser.setRecordStatus(RecordStatus.ACTIVE);
+            sysUser.setUpdateCount(0);
             sysUser.setCreateDate(new Date());
             count = mapper.insertSelective(sysUser);
         }
@@ -267,6 +269,34 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public PagingResult<SysUser> userList(SysUser sysUser, LayuiPage page) {
-        return null;
+//        Example example = new Example(SysUser.class);
+//        Example.Criteria cb = example.createCriteria();
+//
+//        if (Strings.isNotEmpty(sysUser.getUserType())) {
+//            cb.andEqualTo("userType", sysUser.getUserType());
+//        }
+//        if (!Objects.isEmpty(sysUser.getDepartmentId())) {
+//            cb.andEqualTo("departmentId", sysUser.getDepartmentId());
+//        }
+//        //复杂 or条件查询
+//        //通过用户名或者电话过滤
+//        Weekend<SysUser> weekend = new Weekend<>(SysUser.class);
+//        WeekendCriteria<SysUser, Object> keywordCriteria = weekend.weekendCriteria();
+//        if (!Objects.isEmpty(sysUser.getName())) {
+//            keywordCriteria.orLike("name", "%" + sysUser.getName().trim() + "%")
+//                    .orLike("phone", "%" + sysUser.getName().trim() + "%");
+//        }
+//        weekend.and(cb);
+//        example.orderBy("createDate").desc();
+
+        List<SysUser> list = mapper.findUserDetailList();
+
+
+        if (page != null) {
+            PageHelper.startPage(page.getPage(), page.getLimit());
+        }
+//        List<SysUser> list = mapper.selectByExample(weekend);
+        PagingResult<SysUser> pageResult = new PagingResult<>(list);
+        return pageResult;
     }
 }

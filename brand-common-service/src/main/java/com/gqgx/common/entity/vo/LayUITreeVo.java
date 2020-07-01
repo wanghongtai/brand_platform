@@ -39,6 +39,15 @@ public class LayUITreeVo {
 	public void setChildren(List<LayUITreeVo> children) {
 		this.children = children;
 	}
-	
 
+
+	@Override
+	public String toString() {
+		return "LayUITreeVo{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", spread=" + spread +
+				", children=" + children +
+				'}';
+	}
 }

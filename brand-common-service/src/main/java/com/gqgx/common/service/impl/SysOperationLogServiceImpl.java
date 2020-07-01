@@ -3,6 +3,7 @@ package com.gqgx.common.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.gqgx.common.criteria.Criteria;
 import com.gqgx.common.entity.BrandLargeType;
+import com.gqgx.common.entity.RecordStatus;
 import com.gqgx.common.entity.SysOperationLog;
 import com.gqgx.common.lang.Objects;
 import com.gqgx.common.mapper.SysOperationLogMapper;
@@ -35,6 +36,8 @@ public class SysOperationLogServiceImpl implements SysOperationLogService {
             count = mapper.updateByPrimaryKeySelective(sysOperationLog);
         }else{
             //添加操作记录，设置创建时间
+            sysOperationLog.setRecordStatus(RecordStatus.ACTIVE);
+            sysOperationLog.setUpdateCount(0);
             sysOperationLog.setCreateDate(new Date());
             count = mapper.insertSelective(sysOperationLog);
         }

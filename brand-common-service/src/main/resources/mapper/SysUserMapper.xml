@@ -84,6 +84,28 @@
     </collection>
   </resultMap>
 
+  <!--用户详情-->
+  <resultMap type="com.gqgx.common.entity.SysUser" id="userDetailMap">
+    <id column="A_id" property="id" jdbcType="BIGINT" />
+    <result column="A_account_name" property="accountName" jdbcType="VARCHAR" />
+    <result column="A_pass_word" property="passWord" jdbcType="VARCHAR" />
+    <result column="A_name" property="name" jdbcType="VARCHAR" />
+    <result column="A_code" property="code" jdbcType="VARCHAR" />
+    <result column="data_power" property="dataPower" jdbcType="VARCHAR" />
+    <result column="A_company_abb" property="companyAbb" jdbcType="VARCHAR" />
+    <result column="A_company_address" property="companyAddress" jdbcType="VARCHAR" />
+    <result column="A_company_url" property="companyUrl" jdbcType="VARCHAR" />
+    <result column="A_company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="A_phone" property="phone" jdbcType="VARCHAR" />
+    <result column="A_email" property="email" jdbcType="VARCHAR" />
+    <result column="A_company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="A_user_status" property="userStatus" jdbcType="CHAR" />
+    <result column="A_company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="A_department_id" property="departmentId" jdbcType="BIGINT" />
+    <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+    <result column="position_name" property="positionName" jdbcType="VARCHAR" />
+  </resultMap>
+
   <!--根据主键id批量删除-->
   <delete id="deleteByIds">
     delete from sys_user where id in
@@ -92,14 +114,28 @@
     </foreach>
   </delete>
 
-  <!--<select id="findUserByAccountName" resultMap="BaseResultMap">-->
-     <!--SELECT-->
-     <!--id,account_name,pass_word,NAME,CODE,sex,birthday,entry_date,-->
-     <!--department_id,photo_id,phone,email,telephone,contacts,contacts_phone,address,school,major,graduation,-->
-     <!--education,origin,race,marriage,political,remark,user_status,user_type,company_id,record_status,update_count,-->
-     <!--create_date,creator_id,update_date,updater_id,branch_company_id-->
-      <!--FROM sys_user  WHERE  account_name = #{accountName}-->
-  <!--</select>-->
+  <select id="findUserDetailList" parameterType="map" resultMap="userDetailMap">
+    SELECT
+      A.id AS A_id,
+      A.account_name AS A_account_name,
+      A.pass_word AS A_pass_word,
+      A.NAME AS A_name,
+      A.CODE AS A_code,
+      A.user_status AS A_user_status,
+      A.company_id AS A_company_id,
+      A.department_id AS A_department_id,
+      A.phone AS A_phone,
+      A.email AS A_email,
+      d.name AS department_name,
+      c.name AS position_name
+    FROM
+    sys_user a
+    LEFT JOIN sys_user_position b ON a.id = b.user_id AND b.record_status = 'A'
+    LEFT JOIN sys_position c ON c.id = b.position_id AND c.record_status = 'A'
+       LEFT JOIN sys_department d ON d.id = a.department_id AND d.record_status = 'A'
+    WHERE
+    a.record_status = 'A'
+  </select>
 
   <!--查询用户权限-->
   <select id="findUserByAccountName" parameterType="map" resultMap="roleUserMap">

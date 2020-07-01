@@ -102,7 +102,7 @@ public class RoleShiro extends AuthorizingRealm {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         // 查出是否有此用户
         /*SysUser user = Springs.getBean(SysUserService.class).findBaseUserByAccountName(token.getUsername());*/
-        // 到数据库查是否有此对象
+        // 到数据库查是否有此对象,系统菜单List<SysMenu> 添加到user
         SysUser user = Springs.getBean(SysUserService.class).findUserByAccountName(token.getUsername());
         if (user != null) {
             // 离职状态 0在职,1离职
@@ -116,17 +116,10 @@ public class RoleShiro extends AuthorizingRealm {
             }
             AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getAccountName(), user.getPassWord(), this.getName());
 
-            //需连表查询，把系统菜单List<SysMenu> 添加到user
-            //TODO:
-//            List<SysMenu> sysMenuList = new ArrayList<>();
-//            SysMenu sysMenu = new SysMenu();
-//            sysMenu.setId(1L);
-//            sysMenuList.add(sysMenu);
-//            user.setSysMenus(sysMenuList);
-
             SysUserUtil.getHttpSession().setAttribute("sysMenu", user.getSysMenus());
             SysUserUtil.getHttpSession().setAttribute("UserCompanyName", user.getCompanyName());
             SysUserUtil.getHttpSession().setAttribute(Constant.CURRENT_LOGIN_USER, user);
+
             SysDepartmentService sysDepartmentService = Springs.getBean(SysDepartmentService.class);
             List<Long> deparmentIds = sysDepartmentService.findSonDepartment(user.getDepartmentId());
             user.setDeparmentIds(deparmentIds);

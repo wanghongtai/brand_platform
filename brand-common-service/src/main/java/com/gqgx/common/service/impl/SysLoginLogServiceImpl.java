@@ -1,6 +1,7 @@
 package com.gqgx.common.service.impl;
 
 import com.gqgx.common.criteria.Criteria;
+import com.gqgx.common.entity.RecordStatus;
 import com.gqgx.common.entity.SysLoginLog;
 import com.gqgx.common.lang.Objects;
 import com.gqgx.common.mapper.SysLoginLogMapper;
@@ -31,6 +32,8 @@ public class SysLoginLogServiceImpl implements SysLoginLogService {
             count = mapper.updateByPrimaryKeySelective(sysLoginLog);
         }else{
             //设置创建时间时间
+            sysLoginLog.setRecordStatus(RecordStatus.ACTIVE);
+            sysLoginLog.setUpdateCount(0);
             sysLoginLog.setCreateDate(new Date());
             count = mapper.insertSelective(sysLoginLog);
         }

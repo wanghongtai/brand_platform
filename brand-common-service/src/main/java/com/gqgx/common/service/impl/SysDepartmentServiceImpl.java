@@ -1,6 +1,7 @@
 package com.gqgx.common.service.impl;
 
 import com.gqgx.common.criteria.Criteria;
+import com.gqgx.common.entity.RecordStatus;
 import com.gqgx.common.entity.SysDepartment;
 import com.gqgx.common.entity.vo.LayUITreeVo;
 import com.gqgx.common.entity.vo.NodeTreeVo;
@@ -10,6 +11,7 @@ import com.gqgx.common.paging.PagingResult;
 import com.gqgx.common.service.SysDepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +35,9 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
         if(!Objects.isEmpty(sysDepartment.getId())){
             count = mapper.updateByPrimaryKeySelective(sysDepartment);
         }else{
+            sysDepartment.setRecordStatus(RecordStatus.ACTIVE);
+            sysDepartment.setUpdateCount(0);
+            sysDepartment.setCreateDate(new Date());
             count = mapper.insertSelective(sysDepartment);
         }
         return count;
@@ -98,7 +103,8 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 
     @Override
     public List<LayUITreeVo> getDepartmentTree() {
-        return null;
+        List<LayUITreeVo> menuTree = mapper.findMenuTree();
+        return menuTree;
     }
 
     @Override
@@ -118,6 +124,6 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 
     @Override
     public List<SysDepartment> departmentList() {
-        return null;
+        return mapper.selectAll();
     }
 }
