@@ -1,6 +1,7 @@
 package common.service;
 
 import com.gqgx.common.entity.SysMenu;
+import com.gqgx.common.entity.vo.SortableVo;
 import com.gqgx.common.service.SysMenuService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +27,15 @@ public class SysMenuServiceImplTest {
         List<SysMenu> sysMenus = sysMenuService.menuLPowerist(1L);
         System.out.println("总条数：" + sysMenus.size());
         for (SysMenu item : sysMenus) {
+            System.out.println(item);
+        }
+    }
+
+    @Test
+    public void test2() throws Exception {
+        List<SortableVo> list = sysMenuService.sortableList();
+        System.out.println("总条数：" + list.size());
+        for (SortableVo item : list) {
             System.out.println(item);
         }
     }

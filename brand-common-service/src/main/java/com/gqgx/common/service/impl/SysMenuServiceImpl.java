@@ -86,7 +86,8 @@ public class SysMenuServiceImpl implements SysMenuService {
 
     @Override
     public List<SortableVo> sortableList() {
-        return null;
+        List<SortableVo> list = mapper.sortableList();
+        return list;
     }
 
     @Override

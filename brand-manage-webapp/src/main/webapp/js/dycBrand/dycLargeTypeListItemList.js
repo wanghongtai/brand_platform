@@ -75,17 +75,17 @@ var loadFriendShipList = function(){
 		}, {
 			field : 'typeNo',
 			title : '类-编号',
-			width: 150,
+			width: 100,
 			fixed: 'left'
 		}, {
 			field : 'projectName',
 			title : '项目',
-			width: 200,
+			width: 100,
 			fixed: 'left'
 		}, {
 			field : 'projectTranslation',
 			title : '参考译文',
-			width: 300
+			width: 200
 		}, {
 			field : 'projectStatus',
 			title : '状态',
@@ -93,7 +93,7 @@ var loadFriendShipList = function(){
 		},{
 			field : 'projectInvalidDate',
 			title : '生效日期',
-			width: 200
+			width: 100
 		}, {
 			field : 'projectType',
 			title : '类型',

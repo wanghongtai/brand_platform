@@ -3,8 +3,6 @@ package com.gqgx.common.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.gqgx.common.criteria.Criteria;
 import com.gqgx.common.entity.BrandDycTypeItem;
-import com.gqgx.common.entity.BrandGnSmalltypeItem;
-import com.gqgx.common.entity.BrandLargeType;
 import com.gqgx.common.entity.RecordStatus;
 import com.gqgx.common.entity.vo.BrandDycTypeItemVo;
 import com.gqgx.common.lang.Objects;
@@ -64,17 +62,18 @@ public class BrandDycTypeItemServiceImpl implements BrandDycTypeItemService {
 
 	@Override
 	public PagingResult<BrandDycTypeItem> findBrandDycTypeItem(BrandDycTypeItem item, LayuiPage page) {
-		Example example = new Example(BrandLargeType.class);
+		Example example = new Example(BrandDycTypeItem.class);
+		Example.Criteria cb = example.createCriteria();
 
-		example.setOrderByClause("create_date DESC");
-		example.createCriteria().andEqualTo("recordStatus", RecordStatus.ACTIVE);
-
+		cb.andEqualTo("recordStatus", RecordStatus.ACTIVE);
 		if(!Objects.isEmpty(item.getProjectName())) {
-			example.createCriteria().andEqualTo("projectName", item.getProjectName().trim());
+			cb.andLike("projectName", "%"+item.getProjectName().trim()+"%");
 		}
 		if(!Objects.isEmpty(item.getNavItemId())) {
-			example.createCriteria().andEqualTo("navItemId", item.getNavItemId());
+			cb.andEqualTo("navItemId", item.getNavItemId());
 		}
+		example.setOrderByClause("create_date DESC");
+
 		if (page != null) {
 			PageHelper.startPage(page.getPage(), page.getLimit());
 		}
@@ -86,7 +85,7 @@ public class BrandDycTypeItemServiceImpl implements BrandDycTypeItemService {
 
 	@Override
 	public PagingResult<BrandDycTypeItem> findBrandDycTypeItemList(BrandDycTypeItemVo item, LayuiPage page) {
-		Example example = new Example(BrandLargeType.class);
+		Example example = new Example(BrandDycTypeItem.class);
 		Example.Criteria criteria = example.createCriteria();
 
 		example.setOrderByClause("create_date DESC");
@@ -100,8 +99,8 @@ public class BrandDycTypeItemServiceImpl implements BrandDycTypeItemService {
 		}
 
 		//复杂 or条件查询
-		Weekend<BrandGnSmalltypeItem> weekend = new Weekend<>(BrandGnSmalltypeItem.class);
-		WeekendCriteria<BrandGnSmalltypeItem, Object> keywordCriteria = weekend.weekendCriteria();
+		Weekend<BrandDycTypeItem> weekend = new Weekend<>(BrandDycTypeItem.class);
+		WeekendCriteria<BrandDycTypeItem, Object> keywordCriteria = weekend.weekendCriteria();
 		if (!Objects.isEmpty(item.getFilter())) {
 			keywordCriteria.orLike("typeNo", "%" + item.getFilter().trim() + "%")
 					.orLike("projectCnname", "%" + item.getFilter().trim() + "%");

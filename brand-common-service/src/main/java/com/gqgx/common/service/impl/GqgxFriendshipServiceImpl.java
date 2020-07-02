@@ -1,12 +1,17 @@
 package com.gqgx.common.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.gqgx.common.criteria.Criteria;
 import com.gqgx.common.entity.GqgxFriendship;
+import com.gqgx.common.entity.SysUser;
+import com.gqgx.common.lang.Objects;
 import com.gqgx.common.mapper.GqgxFriendshipMapper;
 import com.gqgx.common.paging.LayuiPage;
 import com.gqgx.common.paging.PagingResult;
 import com.gqgx.common.service.GqgxFriendshipService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
@@ -14,7 +19,7 @@ import java.util.List;
 public class GqgxFriendshipServiceImpl implements GqgxFriendshipService {
 
     @Autowired
-    protected GqgxFriendshipMapper gqgxFriendshipDAO;
+    protected GqgxFriendshipMapper mapper;
 
 
     @Override
@@ -44,7 +49,19 @@ public class GqgxFriendshipServiceImpl implements GqgxFriendshipService {
 
     @Override
     public PagingResult<GqgxFriendship> findGqgxFriendship(GqgxFriendship gqgxFriendship, LayuiPage page) {
-        return null;
+        Example example = new Example(GqgxFriendship.class);
+        Example.Criteria cb = example.createCriteria();
+        if(!Objects.isEmpty(gqgxFriendship.getName())) {
+            cb.andLike("name", gqgxFriendship.getName().trim());
+        }
+        example.orderBy("createDate").desc();
+
+        if (page != null) {
+            PageHelper.startPage(page.getPage(), page.getLimit());
+        }
+        List<GqgxFriendship> list = mapper.selectByExample(example);
+        PagingResult<GqgxFriendship> pageResult = new PagingResult<>(list);
+        return pageResult;
     }
 
     @Override

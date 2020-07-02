@@ -40,6 +40,23 @@
     </collection>
   </resultMap>
 
+  <resultMap id="BaseResultMapvo" type="com.gqgx.common.entity.vo.SortableVo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <collection property="items" ofType="com.gqgx.common.entity.vo.SortableItemVo">
+      <id column="item_id" property="itemId" jdbcType="BIGINT" />
+      <result column="item_name" property="itemName" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+  <!--菜单管理，获取菜单列表-->
+  <select id="sortableList"  resultMap="BaseResultMapvo" >
+    select
+    par.id,par.name,
+    child.id item_id,child.name item_name from sys_menu par
+    left join sys_menu child on par.id=child.parent_id and child.record_status='A'
+    where par.parent_id is null and par.record_status='A'  order by par.sort ,child.sort
+  </select>
+
   <!--根据用户id获取菜单列表-->
   <select id="menuPowerList" resultMap="menuPowerListMapVo" parameterType="java.lang.Long">
     SELECT
