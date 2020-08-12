@@ -23,7 +23,7 @@
 		});
 	}
 </script>
-<div class="modal fade" id="cookieList" tabindex="-1" role="dialog" aria-labelledby=""cookieList"" aria-hidden="true">
+<div class="modal fade" id="cookieList" tabindex="-1" role="dialog" aria-labelledby="cookieList" aria-hidden="true">
 	<div class="modal-dialog" style="min-width: 50%;max-width: 80%;">
 		<div class="modal-content">
 			<div class="modal-header">

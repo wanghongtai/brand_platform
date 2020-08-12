@@ -85,14 +85,14 @@ public class BrandLargeTypeServiceImpl implements BrandLargeTypeService {
     public List<BrandLargeType> findBrandLargeTypeList(BrandLargeType type) {
 
         Example example = new Example(BrandLargeType.class);
-
+        Example.Criteria cb = example.createCriteria();
 
         if(type != null && !Objects.isEmpty(type.getName())) {
-            example.createCriteria().andEqualTo("name", type.getName().trim());
+            cb.andEqualTo("name", type.getName().trim());
         }
-        example.createCriteria().andEqualTo("recordStatus", RecordStatus.ACTIVE);
+        cb.andEqualTo("recordStatus", RecordStatus.ACTIVE);
 
-        example.setOrderByClause("catalog ASC");
+        example.orderBy("catalog").asc();
         List<BrandLargeType> brandLargeTypeList = mapper.selectByExample(example);
 
 

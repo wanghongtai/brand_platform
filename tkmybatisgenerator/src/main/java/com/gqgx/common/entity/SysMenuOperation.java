@@ -5,7 +5,6 @@ import javax.persistence.*;
 
 @Table(name = "sys_menu_operation")
 public class SysMenuOperation {
-
     /**
      * 表主键
      */
@@ -360,5 +359,4 @@ public class SysMenuOperation {
     public void setUpdaterId(Long updaterId) {
         this.updaterId = updaterId;
     }
-
 }
