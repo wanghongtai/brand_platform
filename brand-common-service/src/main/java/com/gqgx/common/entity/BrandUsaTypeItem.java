@@ -26,7 +26,7 @@ public class BrandUsaTypeItem {
      * 类-编号
      */
     @Column(name = "type_no")
-        private String typeNo;
+    private String typeNo;
 
     @Column(name = "project_name")
     private String projectName;

@@ -3,8 +3,8 @@ package com.gqgx.common.entity;
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "brand_usa_type_item")
-public class BrandUsaTypeItem {
+@Table(name = "brand_euro_type_item_new")
+public class BrandEuroTypeItemNew {
     /**
      * 主键
      */
@@ -18,43 +18,46 @@ public class BrandUsaTypeItem {
     private Long largeTypeId;
 
     /**
-     * 类-编号
+     * 类别
      */
     @Column(name = "type_no")
     private String typeNo;
 
+    /**
+     * 项目
+     */
     @Column(name = "project_name")
     private String projectName;
 
     /**
-     * 译文
+     * Coor(C)——统一国家局预批准的商品和服务清单描述公共数据库。使用来自该数据库的描述将在商标申请中自动获参与国家局接受。
      */
-    @Column(name = "project_translation")
-    private String projectTranslation;
+    @Column(name = "project_coor")
+    private String projectCoor;
 
     /**
-     * 状态
+     * Harm(H)——参与商品和服务统一化的所有国家局接受的术语
      */
-    @Column(name = "project_status")
-    private String projectStatus;
+    @Column(name = "project_harm")
+    private String projectHarm;
 
     /**
-     * 生效日期
+     * Nice(N)——官方字母索引尼斯分类中的术语
      */
-    @Column(name = "project_invalid_date")
-    private String projectInvalidDate;
+    @Column(name = "project_nice")
+    private String projectNice;
 
     /**
-     * 类型
+     * IDli(I)——所有 TM5 国家局接受的术语
      */
-    @Column(name = "project_type")
-    private String projectType;
+    @Column(name = "project_idli")
+    private String projectIdli;
 
     /**
-     * 版本
+     * MGS(M)——源自马德里商品和服务且在马德里申请中获世界知识产权组织接受的术语
      */
-    @Column(name = "project_version")
-    private String projectVersion;
+    @Column(name = "project_mgs")
+    private String projectMgs;
 
     /**
      * 是否已经失效
@@ -129,125 +132,129 @@ public class BrandUsaTypeItem {
     }
 
     /**
-     * 获取类-编号
+     * 获取类别
      *
-     * @return type_no - 类-编号
+     * @return type_no - 类别
      */
     public String getTypeNo() {
         return typeNo;
     }
 
     /**
-     * 设置类-编号
+     * 设置类别
      *
-     * @param typeNo 类-编号
+     * @param typeNo 类别
      */
     public void setTypeNo(String typeNo) {
         this.typeNo = typeNo == null ? null : typeNo.trim();
     }
 
     /**
-     * @return project_name
+     * 获取项目
+     *
+     * @return project_name - 项目
      */
     public String getProjectName() {
         return projectName;
     }
 
     /**
-     * @param projectName
+     * 设置项目
+     *
+     * @param projectName 项目
      */
     public void setProjectName(String projectName) {
         this.projectName = projectName == null ? null : projectName.trim();
     }
 
     /**
-     * 获取译文
+     * 获取Coor(C)——统一国家局预批准的商品和服务清单描述公共数据库。使用来自该数据库的描述将在商标申请中自动获参与国家局接受。
      *
-     * @return project_translation - 译文
+     * @return project_coor - Coor(C)——统一国家局预批准的商品和服务清单描述公共数据库。使用来自该数据库的描述将在商标申请中自动获参与国家局接受。
      */
-    public String getProjectTranslation() {
-        return projectTranslation;
+    public String getProjectCoor() {
+        return projectCoor;
     }
 
     /**
-     * 设置译文
+     * 设置Coor(C)——统一国家局预批准的商品和服务清单描述公共数据库。使用来自该数据库的描述将在商标申请中自动获参与国家局接受。
      *
-     * @param projectTranslation 译文
+     * @param projectCoor Coor(C)——统一国家局预批准的商品和服务清单描述公共数据库。使用来自该数据库的描述将在商标申请中自动获参与国家局接受。
      */
-    public void setProjectTranslation(String projectTranslation) {
-        this.projectTranslation = projectTranslation == null ? null : projectTranslation.trim();
+    public void setProjectCoor(String projectCoor) {
+        this.projectCoor = projectCoor == null ? null : projectCoor.trim();
     }
 
     /**
-     * 获取状态
+     * 获取Harm(H)——参与商品和服务统一化的所有国家局接受的术语
      *
-     * @return project_status - 状态
+     * @return project_harm - Harm(H)——参与商品和服务统一化的所有国家局接受的术语
      */
-    public String getProjectStatus() {
-        return projectStatus;
+    public String getProjectHarm() {
+        return projectHarm;
     }
 
     /**
-     * 设置状态
+     * 设置Harm(H)——参与商品和服务统一化的所有国家局接受的术语
      *
-     * @param projectStatus 状态
+     * @param projectHarm Harm(H)——参与商品和服务统一化的所有国家局接受的术语
      */
-    public void setProjectStatus(String projectStatus) {
-        this.projectStatus = projectStatus == null ? null : projectStatus.trim();
+    public void setProjectHarm(String projectHarm) {
+        this.projectHarm = projectHarm == null ? null : projectHarm.trim();
     }
 
     /**
-     * 获取生效日期
+     * 获取Nice(N)——官方字母索引尼斯分类中的术语
      *
-     * @return project_invalid_date - 生效日期
+     * @return project_nice - Nice(N)——官方字母索引尼斯分类中的术语
      */
-    public String getProjectInvalidDate() {
-        return projectInvalidDate;
+    public String getProjectNice() {
+        return projectNice;
     }
 
     /**
-     * 设置生效日期
+     * 设置Nice(N)——官方字母索引尼斯分类中的术语
      *
-     * @param projectInvalidDate 生效日期
+     * @param projectNice Nice(N)——官方字母索引尼斯分类中的术语
      */
-    public void setProjectInvalidDate(String projectInvalidDate) {
-        this.projectInvalidDate = projectInvalidDate == null ? null : projectInvalidDate.trim();
+    public void setProjectNice(String projectNice) {
+        this.projectNice = projectNice == null ? null : projectNice.trim();
     }
 
     /**
-     * 获取类型
+     * 获取IDli(I)——所有 TM5 国家局接受的术语
      *
-     * @return project_type - 类型
+     * @return project_idli - IDli(I)——所有 TM5 国家局接受的术语
      */
-    public String getProjectType() {
-        return projectType;
+    public String getProjectIdli() {
+        return projectIdli;
     }
 
     /**
-     * 设置类型
+     * 设置IDli(I)——所有 TM5 国家局接受的术语
      *
-     * @param projectType 类型
+     * @param projectIdli IDli(I)——所有 TM5 国家局接受的术语
      */
-    public void setProjectType(String projectType) {
-        this.projectType = projectType == null ? null : projectType.trim();
+    public void setProjectIdli(String projectIdli) {
+        this.projectIdli = projectIdli == null ? null : projectIdli.trim();
     }
 
     /**
-     * 获取版本
+     * 获取MGS(M)——源自马德里商品和服务且在马德里申请中获世界知识产权组织接受的术语
      *
-     * @return project_version - 版本
+     * @return project_mgs - MGS(M)——源自马德里商品和服务且在马德里申请中获世界知识产权组织接受的术语
      */
-    public String getProjectVersion() {
-        return projectVersion;
+    public String getProjectMgs() {
+        return projectMgs;
     }
 
     /**
-     * 设置版本
+     * 设置MGS(M)——源自马德里商品和服务且在马德里申请中获世界知识产权组织接受的术语
      *
-     * @param projectVersion 版本
+     * @param projectMgs MGS(M)——源自马德里商品和服务且在马德里申请中获世界知识产权组织接受的术语
      */
-    public void setProjectVersion(String projectVersion) {
-        this.projectVersion = projectVersion == null ? null : projectVersion.trim();
+    public void setProjectMgs(String projectMgs) {
+        this.projectMgs = projectMgs == null ? null : projectMgs.trim();
     }
 
     /**

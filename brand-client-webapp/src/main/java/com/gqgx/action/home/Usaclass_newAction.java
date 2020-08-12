@@ -4,13 +4,13 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.gqgx.action.header.HeaderAction;
 import com.gqgx.common.entity.BrandLargeType;
-import com.gqgx.common.entity.BrandUsaTypeItem;
-import com.gqgx.common.entity.vo.BrandUsaTypeItemVo;
+import com.gqgx.common.entity.BrandUsaTypeItemNew;
+import com.gqgx.common.entity.vo.BrandUsaTypeItemNewVo;
 import com.gqgx.common.entity.vo.CookieVo;
 import com.gqgx.common.paging.LayuiPage;
 import com.gqgx.common.paging.PagingResult;
 import com.gqgx.common.service.BrandLargeTypeService;
-import com.gqgx.common.service.BrandUsaTypeItemService;
+import com.gqgx.common.service.BrandUsaTypeItemNewService;
 import com.gqgx.utils.CookieUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +26,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class UsaclassAction extends HeaderAction {
+public class Usaclass_newAction extends HeaderAction {
 
     @Autowired
     private BrandLargeTypeService brandLargeTypeService;
 
     @Autowired
-    private BrandUsaTypeItemService brandUsaTypeItemService;
+    private BrandUsaTypeItemNewService brandUsaTypeItemNewService;
 
     /**
      * 美国商标主页
@@ -40,9 +40,9 @@ public class UsaclassAction extends HeaderAction {
      * @param page
      * @return
      */
-    @RequestMapping("/usaclass")
-    public ModelAndView usaclass(LayuiPage page, Long largeTypeId, String filter, HttpServletRequest request) {
-        ModelAndView view = new ModelAndView("/usaclass");
+    @RequestMapping("/usaclass_new")
+    public ModelAndView usaclass_new(LayuiPage page, Long largeTypeId, String filter, HttpServletRequest request) {
+        ModelAndView view = new ModelAndView("/usaclass_new");
         setNiceclassData(page, largeTypeId, filter, view, request);
         return view;
     }
@@ -53,9 +53,9 @@ public class UsaclassAction extends HeaderAction {
      * @param page
      * @return
      */
-    @RequestMapping("/usaclass/class{largeTypeId}")
+    @RequestMapping("/usaclass_new/class{largeTypeId}")
     public ModelAndView niceclassByLargeType(LayuiPage page, @PathVariable Long largeTypeId, String filter, HttpServletRequest request) {
-        ModelAndView view = new ModelAndView("/usaclass");
+        ModelAndView view = new ModelAndView("/usaclass_new");
         setNiceclassData(page, largeTypeId, filter, view, request);
         return view;
     }
@@ -80,7 +80,7 @@ public class UsaclassAction extends HeaderAction {
         }
 
         //加载列表项
-        BrandUsaTypeItemVo vo = new BrandUsaTypeItemVo();
+        BrandUsaTypeItemNewVo vo = new BrandUsaTypeItemNewVo();
 
         if (null != largeTypeId) {
             vo.setLargeTypeId(largeTypeId);
@@ -91,14 +91,14 @@ public class UsaclassAction extends HeaderAction {
             view.addObject("filter", filter.trim());
         }
 
-        List<CookieVo> list = new ArrayList<CookieVo>();
-        String nicelist = CookieUtil.getCookieValue(request, "usaclass");
+        List<CookieVo> list = new ArrayList<>();
+        String nicelist = CookieUtil.getCookieValue(request, "usaclass_new");
         if (!StringUtils.isEmpty(nicelist)) {
             list = JSONArray.parseArray(nicelist, CookieVo.class);
         }
         view.addObject("usaCookieList", list);
 
-        PagingResult<BrandUsaTypeItem> itemList = brandUsaTypeItemService.findBrandUsaTypeItemList(vo, page);
+        PagingResult<BrandUsaTypeItemNew> itemList = brandUsaTypeItemNewService.findBrandUsaTypeItemNewList(vo, page);
         view.addObject("smallTypeItemList", itemList.getResult());
         page.setTotal(itemList.getTotalCount());
         view.addObject("total", itemList.getTotalCount());
@@ -114,11 +114,11 @@ public class UsaclassAction extends HeaderAction {
      * @return
      */
     @SuppressWarnings("deprecation")
-    @RequestMapping("/setUsaClassCookie")
-    public int setUsaClassCookie(HttpServletResponse response, HttpServletRequest request, CookieVo vo) {
+    @RequestMapping("/setUsaClass_NewCookie")
+    public int setUsaClass_NewCookie(HttpServletResponse response, HttpServletRequest request, CookieVo vo) {
         try {
             List<CookieVo> list = new ArrayList<CookieVo>();
-            String nicelist = CookieUtil.getCookieValue(request, "usaclass");
+            String nicelist = CookieUtil.getCookieValue(request, "usaclass_new");
             if (!StringUtils.isEmpty(nicelist)) {
                 list = JSONArray.parseArray(nicelist, CookieVo.class);
             }
@@ -140,7 +140,7 @@ public class UsaclassAction extends HeaderAction {
 
                 list.add(cookie);
             }
-            CookieUtil.setCookie(response, "usaclass", JSON.toJSONString(list));
+            CookieUtil.setCookie(response, "usaclass_new", JSON.toJSONString(list));
             return 1;
         } catch (UnsupportedEncodingException e) {
             System.out.println("设置cookie值错误" + e.getMessage());
@@ -157,11 +157,11 @@ public class UsaclassAction extends HeaderAction {
      * @param id
      * @return
      */
-    @RequestMapping("/cancelUsaClassCookie/{id}")
-    public int cancelUsaClassCookie(HttpServletResponse response, HttpServletRequest request,
+    @RequestMapping("/cancelUsaClass_NewCookie/{id}")
+    public int cancelUsaClass_NewCookie(HttpServletResponse response, HttpServletRequest request,
                                     @PathVariable Long id) {
         List<CookieVo> list = new ArrayList<CookieVo>();
-        String nicelist = CookieUtil.getCookieValue(request, "usaclass");
+        String nicelist = CookieUtil.getCookieValue(request, "usaclass_new");
         if (!StringUtils.isEmpty(nicelist)) {
             list = JSONArray.parseArray(nicelist, CookieVo.class);
             int rmindex = -1;
@@ -174,7 +174,7 @@ public class UsaclassAction extends HeaderAction {
 
             }
             if (rmindex > -1) list.remove(rmindex);
-            CookieUtil.setCookie(response, "usaclass", JSON.toJSONString(list));
+            CookieUtil.setCookie(response, "usaclass_new", JSON.toJSONString(list));
         }
 
         return 1;

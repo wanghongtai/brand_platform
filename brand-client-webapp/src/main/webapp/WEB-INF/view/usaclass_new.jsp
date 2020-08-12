@@ -23,7 +23,7 @@
 <jsp:include page="/html/common.jsp"></jsp:include>
 </head>
 <body>
-	<input type="hidden" id="currentNavId" value="usaclass">
+	<input type="hidden" id="currentNavId" value="usaclass_new">
 	<div class="t3-wrapper">
 		<!-- 头部 -->
 		<jsp:include page="/html/nav_header.jsp"></jsp:include>
@@ -63,12 +63,12 @@
 							<li class="active"><span>美国商品与服务项目</span></li>
 						</c:if>
 						<c:if test="${not empty largeType and empty smallType}">
-							<li><a href="${ctxPath}/usaclass.html" class="pathway">美国商品与服务项目</a></li>
+							<li><a href="${ctxPath}/usaclass_new.html" class="pathway">美国商品与服务项目</a></li>
 							<li class="active"><span>${largeType.name}</span></li>
 						</c:if>
 						<c:if test="${not empty smallType and not empty largeType}">
-							<li><a href="${ctxPath}/usaclass.html" class="pathway">美国商品与服务项目</a></li>
-							<li><a href="${ctxPath}/usaclass/class${largeType.id}.html" class="pathway">${largeType.name}</a></li>
+							<li><a href="${ctxPath}/usaclass_new.html" class="pathway">美国商品与服务项目</a></li>
+							<li><a href="${ctxPath}/usaclass_new/class${largeType.id}.html" class="pathway">${largeType.name}</a></li>
 							<li class="active"><span>${smallType.name}</span></li>
 						</c:if>
 					</ul>
@@ -139,7 +139,7 @@
 								<button class="button btn btn-secondary cbButton cbResetButton"
 									onclick="document.getElementById('contentbuilder_filter').value='';document.adminForm.submit();">重置</button>
 								<button class="button btn btn-secondary cbButton cbSearchButton"
-									onclick="getCookieList('usaclass');" data-toggle="modal" data-target="#cookieList">获取标记值</button>
+									onclick="getCookieList('usaclass_new');" data-toggle="modal" data-target="#cookieList">获取标记值</button>
 							</div>
 							<div style="float: left; padding-right: 5px;">
 								<i class="fa fa-info-circle"> </i>&nbsp;&nbsp;<span
@@ -213,7 +213,7 @@
 							function setUsaClassCookie(obj,id,name){
 								if($(obj).is(':checked')){
 									$.ajax({ 
-										url: "${ctxPath}/setUsaClassCookie",
+										url: "${ctxPath}/setUsaClass_NewCookie",
 										type: 'POST',
 										data:{id:id, name: name},
 										success: function(){
@@ -221,7 +221,7 @@
 									});
 								}else{
 									$.ajax({ 
-										url: "${ctxPath}/cancelUsaClassCookie/"+id,
+										url: "${ctxPath}/cancelUsaClass_NewCookie/"+id,
 										type: 'POST',
 										success: function(){
 								    	}
@@ -232,7 +232,7 @@
 							//清除值
 							function delCookie(id,obj,name){
 								$.ajax({ 
-									url: "${ctxPath}/cancelUsaClassCookie/"+id,
+									url: "${ctxPath}/cancelUsaClass_NewCookie/"+id,
 									type: 'POST',
 									success: function(){
 										$(obj).parent().remove();
@@ -270,7 +270,7 @@
 															<label style="width:28px;text-align: center;">
 																<span style="font-family: arial black,avant garde; font-size: 12pt;">
 																	<span style="font-family: arial black,avant garde; font-size: 12pt;">
-																		<a href="${ctxPath}/usaclass/class${item.id}/">${item.catalog}</a>
+																		<a href="${ctxPath}/usaclass_new/class${item.id}/">${item.catalog}</a>
 																	</span>
 																</span>
 															</label>
@@ -287,7 +287,7 @@
 												<h4 class="panel-title" style="text-align: left;">
 													<span style="font-size: 12pt;"><strong>${item.cnno}：</strong></span>
 													<span style="color: #21c2f8; font-size: 10pt;"> 
-														<a href="${ctxPath}/usaclass/class${item.id}/" target="_self"> 
+														<a href="${ctxPath}/usaclass_new/class${item.id}/" target="_self">
 															<span style="color: #21c2f8;">
 																${item.instruction}
 															</span>

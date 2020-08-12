@@ -24,6 +24,10 @@
 						<li id="niceclass"><a class="" href="${ctxPath}/niceclass/">通用尼斯</a></li>
 						<li id="usaclass"><a class="" href="${ctxPath}/usaclass/">美国商标</a></li>
 						<li id="euroclass"><a class="" href="${ctxPath}/euroclass/">欧盟商标</a></li>
+
+						<li id="usaclass_new"><a class="" href="${ctxPath}/usaclass_new/">美国商标(新)</a></li>
+						<li id="euroclass_new"><a class="" href="${ctxPath}/euroclass_new/">欧盟商标(新)</a></li>
+
 						<li id="auclass"><a class="" href="${ctxPath}/auclass/">澳洲商标</a></li>
 						<li id="jpclass"><a class="" href="${ctxPath}/jpclass/">日本商标</a></li>
 						<li id="korclass"><a class="" href="${ctxPath}/korclass/">韩国商标</a></li>

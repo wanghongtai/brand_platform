@@ -2,13 +2,17 @@ package com.gqgx.common.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.gqgx.common.criteria.Criteria;
-import com.gqgx.common.entity.*;
+import com.gqgx.common.entity.BrandUsaTypeItem;
+import com.gqgx.common.entity.BrandUsaTypeItemNew;
+import com.gqgx.common.entity.RecordStatus;
+import com.gqgx.common.entity.vo.BrandUsaTypeItemNewVo;
 import com.gqgx.common.entity.vo.BrandUsaTypeItemVo;
 import com.gqgx.common.lang.Objects;
 import com.gqgx.common.mapper.BrandUsaTypeItemMapper;
+import com.gqgx.common.mapper.BrandUsaTypeItemNewMapper;
 import com.gqgx.common.paging.LayuiPage;
 import com.gqgx.common.paging.PagingResult;
-import com.gqgx.common.service.BrandUsaTypeItemService;
+import com.gqgx.common.service.BrandUsaTypeItemNewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.weekend.Weekend;
@@ -18,51 +22,51 @@ import java.util.Date;
 import java.util.List;
 
 @org.springframework.stereotype.Service
-public class BrandUsaTypeItemServiceImpl implements BrandUsaTypeItemService {
+public class BrandUsaTypeItemNewServiceImpl implements BrandUsaTypeItemNewService {
 
     @Autowired
-    protected BrandUsaTypeItemMapper mapper;
+    protected BrandUsaTypeItemNewMapper mapper;
 
 
     @Override
-    public BrandUsaTypeItem getBrandUsaTypeItem(Long id) {
+    public BrandUsaTypeItemNew getBrandUsaTypeItemNew(Long id) {
 
         return mapper.selectByPrimaryKey(id);
     }
 
     @Override
-    public int saveBrandUsaTypeItem(BrandUsaTypeItem brandUsaTypeItem) {
+    public int saveBrandUsaTypeItemNew(BrandUsaTypeItemNew item) {
         int count = 0;
-        if(!Objects.isEmpty(brandUsaTypeItem.getId())){
-            count = mapper.updateByPrimaryKeySelective(brandUsaTypeItem);
+        if(!Objects.isEmpty(item.getId())){
+            count = mapper.updateByPrimaryKeySelective(item);
         }else{
-            brandUsaTypeItem.setRecordStatus(RecordStatus.ACTIVE);
-            brandUsaTypeItem.setUpdateCount(0);
-            brandUsaTypeItem.setCreateDate(new Date());
-            count = mapper.insertSelective(brandUsaTypeItem);
+            item.setRecordStatus(RecordStatus.ACTIVE);
+            item.setUpdateCount(0);
+            item.setCreateDate(new Date());
+            count = mapper.insertSelective(item);
         }
         return count;
     }
 
     @Override
-    public int deleteBrandUsaTypeItem(BrandUsaTypeItem brandUsaTypeItem) {
+    public int deleteBrandUsaTypeItemNew(BrandUsaTypeItemNew item) {
 
-        return mapper.delete(brandUsaTypeItem);
+        return mapper.delete(item);
     }
 
     @Override
-    public int deleteBrandUsaTypeItemByIds(Long[] ids) {
+    public int deleteBrandUsaTypeItemNewByIds(Long[] ids) {
 
         return mapper.deleteByIds(ids);
     }
 
     @Override
-    public PagingResult<BrandUsaTypeItem> findBrandUsaTypeItem(Criteria criteria) {
+    public PagingResult<BrandUsaTypeItemNew> findBrandUsaTypeItemNew(Criteria criteria) {
         return null;
     }
 
     @Override
-    public PagingResult<BrandUsaTypeItem> findBrandUsaTypeItem(BrandUsaTypeItem item, LayuiPage page) {
+    public PagingResult<BrandUsaTypeItemNew> findBrandUsaTypeItemNew(BrandUsaTypeItemNew item, LayuiPage page) {
         Example example = new Example(BrandUsaTypeItem.class);
         example.setOrderByClause("create_date DESC");
 
@@ -72,15 +76,15 @@ public class BrandUsaTypeItemServiceImpl implements BrandUsaTypeItemService {
         if (page != null) {
             PageHelper.startPage(page.getPage(), page.getLimit());
         }
-        List<BrandUsaTypeItem> list = mapper.selectByExample(example);
+        List<BrandUsaTypeItemNew> list = mapper.selectByExample(example);
 
-        PagingResult<BrandUsaTypeItem> pageResult = new PagingResult<>(list);
+        PagingResult<BrandUsaTypeItemNew> pageResult = new PagingResult<>(list);
         return pageResult;
     }
 
     @Override
-    public PagingResult<BrandUsaTypeItem> findBrandUsaTypeItemList(BrandUsaTypeItemVo vo, LayuiPage page) {
-        Example example = new Example(BrandUsaTypeItem.class);
+    public PagingResult<BrandUsaTypeItemNew> findBrandUsaTypeItemNewList(BrandUsaTypeItemNewVo vo, LayuiPage page) {
+        Example example = new Example(BrandUsaTypeItemNew.class);
         Example.Criteria cb = example.createCriteria();
 
         cb.andEqualTo("recordStatus", RecordStatus.ACTIVE);
@@ -103,9 +107,9 @@ public class BrandUsaTypeItemServiceImpl implements BrandUsaTypeItemService {
         if (page != null) {
             PageHelper.startPage(page.getPage(), page.getLimit());
         }
-        List<BrandUsaTypeItem> list = mapper.selectByExample(weekend);
+        List<BrandUsaTypeItemNew> list = mapper.selectByExample(weekend);
 
-        PagingResult<BrandUsaTypeItem> pageResult = new PagingResult<>(list);
+        PagingResult<BrandUsaTypeItemNew> pageResult = new PagingResult<>(list);
         return pageResult;
 
     }

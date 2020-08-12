@@ -1,15 +1,28 @@
 package com.gqgx.common.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
-import javax.persistence.*;
 
-@Table(name = "brand_usa_type_item")
-public class BrandUsaTypeItem {
+@Table(name = "brand_usa_type_item_new")
+public class BrandUsaTypeItemNew {
+    /*
+    * 新增字段
+    * */
+    private BrandLargeType brandLargeType;
+
     /**
      * 主键
      */
     @Id
     private Long id;
+
+    /**
+     * 导航 brand_nav_item.id
+     */
+    @Column(name = "nav_item_id")
+    private Long navItemId;
 
     /**
      * brand_large_type.id
@@ -23,6 +36,9 @@ public class BrandUsaTypeItem {
     @Column(name = "type_no")
     private String typeNo;
 
+    /**
+     * 项目
+     */
     @Column(name = "project_name")
     private String projectName;
 
@@ -111,6 +127,24 @@ public class BrandUsaTypeItem {
     }
 
     /**
+     * 获取导航 brand_nav_item.id
+     *
+     * @return nav_item_id - 导航 brand_nav_item.id
+     */
+    public Long getNavItemId() {
+        return navItemId;
+    }
+
+    /**
+     * 设置导航 brand_nav_item.id
+     *
+     * @param navItemId 导航 brand_nav_item.id
+     */
+    public void setNavItemId(Long navItemId) {
+        this.navItemId = navItemId;
+    }
+
+    /**
      * 获取brand_large_type.id
      *
      * @return large_type_id - brand_large_type.id
@@ -147,14 +181,18 @@ public class BrandUsaTypeItem {
     }
 
     /**
-     * @return project_name
+     * 获取项目
+     *
+     * @return project_name - 项目
      */
     public String getProjectName() {
         return projectName;
     }
 
     /**
-     * @param projectName
+     * 设置项目
+     *
+     * @param projectName 项目
      */
     public void setProjectName(String projectName) {
         this.projectName = projectName == null ? null : projectName.trim();
@@ -356,5 +394,13 @@ public class BrandUsaTypeItem {
      */
     public void setUpdaterId(Long updaterId) {
         this.updaterId = updaterId;
+    }
+
+    public BrandLargeType getBrandLargeType() {
+        return brandLargeType;
+    }
+
+    public void setBrandLargeType(BrandLargeType brandLargeType) {
+        this.brandLargeType = brandLargeType;
     }
 }

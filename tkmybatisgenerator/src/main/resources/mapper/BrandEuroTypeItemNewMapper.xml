@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.gqgx.common.mapper.BrandUsaTypeItemMapper">
-  <resultMap id="BaseResultMap" type="com.gqgx.common.entity.BrandUsaTypeItem">
+<mapper namespace="com.gqgx.common.mapper.BrandEuroTypeItemNewMapper">
+  <resultMap id="BaseResultMap" type="com.gqgx.common.entity.BrandEuroTypeItemNew">
     <!--
       WARNING - @mbg.generated
     -->
@@ -9,11 +9,11 @@
     <result column="large_type_id" jdbcType="BIGINT" property="largeTypeId" />
     <result column="type_no" jdbcType="VARCHAR" property="typeNo" />
     <result column="project_name" jdbcType="VARCHAR" property="projectName" />
-    <result column="project_translation" jdbcType="VARCHAR" property="projectTranslation" />
-    <result column="project_status" jdbcType="VARCHAR" property="projectStatus" />
-    <result column="project_invalid_date" jdbcType="VARCHAR" property="projectInvalidDate" />
-    <result column="project_type" jdbcType="VARCHAR" property="projectType" />
-    <result column="project_version" jdbcType="VARCHAR" property="projectVersion" />
+    <result column="project_coor" jdbcType="VARCHAR" property="projectCoor" />
+    <result column="project_harm" jdbcType="VARCHAR" property="projectHarm" />
+    <result column="project_nice" jdbcType="VARCHAR" property="projectNice" />
+    <result column="project_idli" jdbcType="VARCHAR" property="projectIdli" />
+    <result column="project_mgs" jdbcType="VARCHAR" property="projectMgs" />
     <result column="record_status" jdbcType="CHAR" property="recordStatus" />
     <result column="update_count" jdbcType="INTEGER" property="updateCount" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
