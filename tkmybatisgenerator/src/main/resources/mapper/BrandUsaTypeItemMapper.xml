@@ -6,7 +6,8 @@
       WARNING - @mbg.generated
     -->
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="large_type_id" jdbcType="BIGINT" property="largeTypeId" />
+    <result column="nav_item_id" jdbcType="BIGINT" property="navItemId" />
+    <result column="large_type_id" jdbcType="VARCHAR" property="largeTypeId" />
     <result column="type_no" jdbcType="VARCHAR" property="typeNo" />
     <result column="project_name" jdbcType="VARCHAR" property="projectName" />
     <result column="project_translation" jdbcType="VARCHAR" property="projectTranslation" />

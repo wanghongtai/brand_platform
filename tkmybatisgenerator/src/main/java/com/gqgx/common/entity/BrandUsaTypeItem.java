@@ -12,10 +12,16 @@ public class BrandUsaTypeItem {
     private Long id;
 
     /**
+     * 导航 brand_nav_item.id
+     */
+    @Column(name = "nav_item_id")
+    private Long navItemId;
+
+    /**
      * brand_large_type.id
      */
     @Column(name = "large_type_id")
-    private Long largeTypeId;
+    private String largeTypeId;
 
     /**
      * 类-编号
@@ -23,6 +29,9 @@ public class BrandUsaTypeItem {
     @Column(name = "type_no")
     private String typeNo;
 
+    /**
+     * 项目
+     */
     @Column(name = "project_name")
     private String projectName;
 
@@ -111,11 +120,29 @@ public class BrandUsaTypeItem {
     }
 
     /**
+     * 获取导航 brand_nav_item.id
+     *
+     * @return nav_item_id - 导航 brand_nav_item.id
+     */
+    public Long getNavItemId() {
+        return navItemId;
+    }
+
+    /**
+     * 设置导航 brand_nav_item.id
+     *
+     * @param navItemId 导航 brand_nav_item.id
+     */
+    public void setNavItemId(Long navItemId) {
+        this.navItemId = navItemId;
+    }
+
+    /**
      * 获取brand_large_type.id
      *
      * @return large_type_id - brand_large_type.id
      */
-    public Long getLargeTypeId() {
+    public String getLargeTypeId() {
         return largeTypeId;
     }
 
@@ -124,8 +151,8 @@ public class BrandUsaTypeItem {
      *
      * @param largeTypeId brand_large_type.id
      */
-    public void setLargeTypeId(Long largeTypeId) {
-        this.largeTypeId = largeTypeId;
+    public void setLargeTypeId(String largeTypeId) {
+        this.largeTypeId = largeTypeId == null ? null : largeTypeId.trim();
     }
 
     /**
@@ -147,14 +174,18 @@ public class BrandUsaTypeItem {
     }
 
     /**
-     * @return project_name
+     * 获取项目
+     *
+     * @return project_name - 项目
      */
     public String getProjectName() {
         return projectName;
     }
 
     /**
-     * @param projectName
+     * 设置项目
+     *
+     * @param projectName 项目
      */
     public void setProjectName(String projectName) {
         this.projectName = projectName == null ? null : projectName.trim();
