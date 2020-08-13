@@ -160,6 +160,7 @@
 									<th class="sectiontableheader"><a>标记</a></th>
 									<th class="sectiontableheader" style="min-width:50px;">类别</th>
 									<th class="sectiontableheader hidden-phone" style="min-width:400px;">项目</th>
+									<th class="sectiontableheader hidden-phone">参考译文</th>
 									<%--<th class="sectiontableheader hidden-phone" style="min-width:30px;">C</th>--%>
 									<%--<th class="sectiontableheader hidden-phone" style="min-width:30px;">H</th>--%>
 									<%--<th class="sectiontableheader hidden-phone" style="min-width:30px;">N</th>--%>
@@ -188,6 +189,7 @@
 										</td>
 										<td>${item.typeNo}</td>
 										<td class="hidden-phone">${item.projectName}</td>
+										<td class="hidden-phone">${item.projectTranslation}</td>
 										<%--<td class="hidden-phone">${item.projectCoor eq '0' ? '√' : ''}</td>--%>
 										<%--<td class="hidden-phone">${item.projectHarm eq '0' ? '√' : ''}</td>--%>
 										<%--<td class="hidden-phone">${item.projectNice eq '0' ? '√' : ''}</td>--%>

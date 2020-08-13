@@ -6,14 +6,15 @@
       WARNING - @mbg.generated
     -->
     <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="nav_item_id" jdbcType="BIGINT" property="navItemId" />
     <result column="large_type_id" jdbcType="BIGINT" property="largeTypeId" />
     <result column="type_no" jdbcType="VARCHAR" property="typeNo" />
     <result column="project_name" jdbcType="VARCHAR" property="projectName" />
-    <result column="project_coor" jdbcType="VARCHAR" property="projectCoor" />
-    <result column="project_harm" jdbcType="VARCHAR" property="projectHarm" />
-    <result column="project_nice" jdbcType="VARCHAR" property="projectNice" />
-    <result column="project_idli" jdbcType="VARCHAR" property="projectIdli" />
-    <result column="project_mgs" jdbcType="VARCHAR" property="projectMgs" />
+    <result column="project_translation" jdbcType="VARCHAR" property="projectTranslation" />
+    <result column="project_status" jdbcType="VARCHAR" property="projectStatus" />
+    <result column="project_invalid_date" jdbcType="VARCHAR" property="projectInvalidDate" />
+    <result column="project_type" jdbcType="VARCHAR" property="projectType" />
+    <result column="project_version" jdbcType="VARCHAR" property="projectVersion" />
     <result column="record_status" jdbcType="CHAR" property="recordStatus" />
     <result column="update_count" jdbcType="INTEGER" property="updateCount" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
